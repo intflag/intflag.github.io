@@ -49,4 +49,70 @@
     
   </entry>
   
+  <entry>
+    <title>如何将项目上传到GitHub</title>
+    <link href="http://yoursite.com/%E5%A6%82%E4%BD%95%E5%B0%86%E9%A1%B9%E7%9B%AE%E4%B8%8A%E4%BC%A0%E5%88%B0GitHub.html"/>
+    <id>http://yoursite.com/如何将项目上传到GitHub.html</id>
+    <published>2018-11-01T08:46:04.000Z</published>
+    <updated>2018-11-01T08:46:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>本人微信公众号「intflags」，欢迎扫码关注！</p></blockquote><p><img src="http://phsyg9eyi.bkt.clouddn.com/introduce2.jpg" alt=""></p><h2 id="如何将项目上传到GitHub？"><a href="#如何将项目上传到GitHub？" class="headerlink" title="如何将项目上传到GitHub？"></a>如何将项目上传到GitHub？</h2><h3 id="1、注册GitHub账户"><a href="#1、注册GitHub账户" class="headerlink" title="1、注册GitHub账户"></a>1、注册GitHub账户</h3><ul><li>浏览器输入GitHub官网地址：<a href="https://github.com/" target="_blank" rel="noopener">https://github.com/</a></li><li>进入后点击Sign In<br><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub01.png" alt=""></li><li>然后点击Create an account<br><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub02.png" alt=""></li><li>然后输入用户名、密码、邮箱等信息，用户名一定要简短好记，因为这个用户名关系到以后你的个性域名。<br><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub03.png" alt=""></li><li>按照系统提示，一步步将信息填写完毕后就OK了，如果中途遇到问题，可以复制提示信息到百度翻译查一下。此后遇到类似问题也一样，因为好多工具或者开源框架官网都是英文的。<h3 id="2、安装Git客户端"><a href="#2、安装Git客户端" class="headerlink" title="2、安装Git客户端"></a>2、安装Git客户端</h3></li><li><p>下载Git客户端，官方地址：<a href="https://git-scm.com/download/win" target="_blank" rel="noopener">https://git-scm.com/download/win</a></p></li><li><p>双击安装包进行安装</p><p><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub04.png" alt=""></p><p><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub05.png" alt=""></p><p><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub06.png" alt=""></p><p><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub07.png" alt=""></p><p><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub08.png" alt=""></p><p><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub09.png" alt=""></p><p><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub10.png" alt=""></p><p><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub11.png" alt=""></p><p><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub12.png" alt=""></p></li><li><p>安装完毕</p><h3 id="3、在GitHub上创建项目"><a href="#3、在GitHub上创建项目" class="headerlink" title="3、在GitHub上创建项目"></a>3、在GitHub上创建项目</h3></li><li>新建仓库<br><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub13.png" alt=""></li><li>填写项目信息<br><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub14.png" alt=""></li><li>创建完毕<br><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub15.png" alt=""><h3 id="4、使用Git命令提交项目到GitHub"><a href="#4、使用Git命令提交项目到GitHub" class="headerlink" title="4、使用Git命令提交项目到GitHub"></a>4、使用Git命令提交项目到GitHub</h3></li><li>打开要上传的项目的工作路径，在目录空白处鼠标右键<br><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub16.png" alt=""></li><li>点击Git Bash Here打开Git命令行界面<br><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub17.png" alt=""></li><li>输入命令：<strong>git init</strong> 初始化项目<br><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub18.png" alt=""></li><li>输入命令：<strong>git add .</strong> 将该目录下所有文件加入本地暂存区，注意命令后面有一个.代表将所有文件添加到暂存区，如果只想将个别提交，那么将.换成文件名即可。<br><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub19.png" alt=""></li><li>输入命令：<strong>git status</strong> 查看状态，该命令会将工作空间中的版本与暂存区的版本进行对比，我下面的状态是已经把所有文件加入到了暂存区中，但是还没有提交到本地历史区。<br><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub20.png" alt=""></li><li>输入命令：<strong>git commit -m “项目注释”</strong><br><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub21.png" alt=""></li><li>输入命令：<strong>git remote add origin <a href="https://github.com/intflag/SayLOVE.git" target="_blank" rel="noopener">https://github.com/intflag/SayLOVE.git</a></strong> 该命令是把本地历史区中的文件添加到github服务器的暂存区中。这一步是本地和远程服务器建立联系的一步。执行成功后不会显示任何结果。<br><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub22.png" alt=""></li><li>输入命令：<strong>git pull origin master</strong> 该命令是先把github上的文件拉下来，注意在每次提交之前要首先进行pull，这是防止冲突。<strong>如果报错，只要输入git pull origin master –allow-unrelated-histories 即可</strong><br><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub23.png" alt=""></li><li>上述执行成功后，发现在项目目录下多了一个“README.md”文件，这个文件就是从github上拉下来的。因为我们在github上创建repository的时候就创建了这个“README.md”文件，该文件是对这个repository的说明。<br><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub24.png" alt=""></li><li>输入命令：<strong>git push -u origin master</strong> 这一步是真正向github提交，执行完成后，github上的repository就有和你本地一样的代码文件了。<br><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub25.png" alt=""></li><li>执行完毕后到GitHub上查看结果。<br><img src="http://phsyg9eyi.bkt.clouddn.com/GitHub26.png" alt=""></li><li>此时，项目就提交完毕了。</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;本人微信公众号「intflags」，欢迎扫码关注！&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;http://phsyg9eyi.bkt.clouddn.com/introduce2.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h2 id
+      
+    
+    </summary>
+    
+      <category term="IDE&amp;工具" scheme="http://yoursite.com/categories/IDE-%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="GitHub" scheme="http://yoursite.com/tags/GitHub/"/>
+    
+      <category term="项目上传" scheme="http://yoursite.com/tags/%E9%A1%B9%E7%9B%AE%E4%B8%8A%E4%BC%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>防民之口，慎于防川！谈谈遇害的沙特记者。</title>
+    <link href="http://yoursite.com/%E9%98%B2%E6%B0%91%E4%B9%8B%E5%8F%A3%EF%BC%8C%E6%85%8E%E4%BA%8E%E9%98%B2%E5%B7%9D%EF%BC%81%E8%B0%88%E8%B0%88%E9%81%87%E5%AE%B3%E7%9A%84%E6%B2%99%E7%89%B9%E8%AE%B0%E8%80%85.html"/>
+    <id>http://yoursite.com/防民之口，慎于防川！谈谈遇害的沙特记者.html</id>
+    <published>2018-10-31T10:28:17.000Z</published>
+    <updated>2018-10-31T10:28:17.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>转载自本人微信公众号「intflags」，欢迎扫码关注！</p></blockquote><p><img src="http://phsyg9eyi.bkt.clouddn.com/introduce2.jpg" alt=""></p><p>卡舒吉是沙特阿拉伯的一位记者，他的经历很传奇，不仅和老一辈的沙特王室权贵都搭得上，还了解沙特王室的很多秘密，在1980年代和1990年代，他曾几次采访本拉登，为此，他名声大噪。后来拿了美国签证，还成为「华盛顿邮报」的专栏记者。</p><p><img src="http://phsyg9eyi.bkt.clouddn.com/%E5%8D%A1%E8%88%92%E5%90%8904.jpg" alt="2018年9月29日，英国伦敦，沙特记者贾迈勒·卡舒吉出席《中东箴言报》举办的活动。图片来源：视觉中国"></p><p>在任职华盛顿专栏记者期间，他利用美国媒体的影响力，多次公开痛批沙特国王「小萨勒曼」和王储，反对他们的对外政策，并且揭露沙特的腐败，所以沙特国王对他恨之入骨。</p><p>2018年10月2日，卡舒吉进入伊斯坦布尔的沙特领事馆办理离婚证明，以便与土耳其女子结婚，可是进去之后就再也没有出来，他被沙特国王小萨勒曼派出的15名特工残忍杀害，是被肢解的，而且还是在他意识清醒的情况下，让他看着自己的身体被肢解，特别残暴变态。</p><p><img src="http://phsyg9eyi.bkt.clouddn.com/%E5%8D%A1%E8%88%92%E5%90%8903.png" alt="图右：卡舒吉，图片素材来源：新闻片段截图"></p><p>这件事全球都在关注，主要在于人权，在如今的文明社会还会发生这样的暴行简直令人震惊，虽然看起来和我们毫无关系，但是人权是全球的事。</p><p>看了这个新闻以后让我想起著名历史老师「石国鹏」讲过的一个典故「防民之口，甚于防川」，说西周末年的一位君主叫做「周厉王」，为了决定增加赋税，维持花天酒地的生活，他对一些重要物产征收“专利税”。不论是王公大臣还是平民百姓，只要他们采药、砍柴，捕鱼虾、射鸟兽，都必须纳税；甚至喝水、走路也得缴纳钱物。</p><p>周厉王残暴无道，老百姓纷纷责骂他。邵公对厉王说，老百姓已不堪忍受暴虐的政令啦！厉王听了勃然大怒，找到一个卫国的巫者，只要有人说他坏话，就会暗中杀害他们。老百姓怨声载道，不敢说话，用眼神表达自己的愤怒。周厉王自鸣得意，以为这样就可以堵住老百姓的悠悠之口。</p><p>邵公对厉王说：你这样做只能堵住人们的嘴。可是防范老百姓的嘴，比防备河水泛滥更不易。河道因堵塞而造成决口，就会伤害很多人。倘使堵住老百姓的口，后果也将如此。可是厉王根本不听，三年后，百姓忍无可忍，心中的怨气累积到顶点，终于导致国人暴动，周厉王被赶出国都，最后死在了彘[zhì]地。</p><p>中国人在三千年前就说过「防民之口，甚于防川」这样的话。以史为鉴，可以知得失。民意乃最大的天意，像沙特这样失去民意的国家，早晚会自取灭亡。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;转载自本人微信公众号「intflags」，欢迎扫码关注！&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;http://phsyg9eyi.bkt.clouddn.com/introduce2.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;
+      
+    
+    </summary>
+    
+      <category term="云端笑猿" scheme="http://yoursite.com/categories/%E4%BA%91%E7%AB%AF%E7%AC%91%E7%8C%BF/"/>
+    
+    
+      <category term="沙特" scheme="http://yoursite.com/tags/%E6%B2%99%E7%89%B9/"/>
+    
+      <category term="卡舒吉" scheme="http://yoursite.com/tags/%E5%8D%A1%E8%88%92%E5%90%89/"/>
+    
+      <category term="遇害记者" scheme="http://yoursite.com/tags/%E9%81%87%E5%AE%B3%E8%AE%B0%E8%80%85/"/>
+    
+      <category term="言论自由" scheme="http://yoursite.com/tags/%E8%A8%80%E8%AE%BA%E8%87%AA%E7%94%B1/"/>
+    
+  </entry>
+  
 </feed>
