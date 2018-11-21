@@ -311,8 +311,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/云端笑猿/" itemprop="url" rel="index">
-                    <span itemprop="name">云端笑猿</span>
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
                   </a>
                 </span>
 
@@ -342,7 +342,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  328
+                  522
                 </span>
               
 
@@ -358,7 +358,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -419,6 +419,34 @@
 </ul>
 <p>6）测试jdk安装成功</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop101 jdk1.7.0_79]# java -version</span><br><span class="line">java version &quot;1.7.0_79&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="8、安装Hadoop"><a href="#8、安装Hadoop" class="headerlink" title="8、安装Hadoop"></a>8、安装Hadoop</h4><p>1）进入到Hadoop安装包路径下</p>
+<p>2）解压安装文件到/opt/module下面</p>
+<p>3）查看是否解压成功</p>
+<p>4）配置hadoop中的hadoop-env.sh</p>
+<ul>
+<li><p>Linux系统中获取jdk的安装路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop101 jdk1.7.0_79]# echo $JAVA_HOME</span><br><span class="line">/opt/module/jdk1.7.0_79</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改hadoop-env.sh文件中JAVA_HOME 路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/opt/module/jdk1.7.0_79</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>5）将hadoop添加到环境变量</p>
+<ul>
+<li><p>获取hadoop安装路径</p>
+</li>
+<li><p>打开/etc/profile文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@ hadoop101 hadoop-2.7.2]# vi /etc/profile</span><br><span class="line">		在profie文件末尾添加jdk路径：（shitf+g）</span><br><span class="line"></span><br><span class="line">##HADOOP_HOME</span><br><span class="line">export HADOOP_HOME=/opt/module/hadoop-2.7.2</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/sbin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>保存后退出</p>
+</li>
+<li><p>让修改后的文件生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@ hadoop101 hadoop-2.7.2]# source /etc/profile</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（5）重启(如果hadoop命令不能用再重启)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@ hadoop101 hadoop-2.7.2]# sync</span><br><span class="line">root@ hadoop101 hadoop-2.7.2]# reboot</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 
       
     </div>
@@ -463,8 +491,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/Hadoop系列002-从Hadoop框架讨论大数据生态.html" rel="next" title="Hadoop系列002-从Hadoop框架讨论大数据生态">
-                <i class="fa fa-chevron-left"></i> Hadoop系列002-从Hadoop框架讨论大数据生态
+              <a href="/Hadoop系列004-Hadoop运行模式.html" rel="next" title="Hadoop系列004-Hadoop运行模式（上）">
+                <i class="fa fa-chevron-left"></i> Hadoop系列004-Hadoop运行模式（上）
               </a>
             
           </div>
@@ -550,7 +578,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -561,7 +589,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -572,7 +600,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
@@ -652,7 +680,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop运行环境搭建"><span class="nav-number">1.</span> <span class="nav-text">Hadoop运行环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、虚拟机网络模式设置为NAT"><span class="nav-number">1.1.</span> <span class="nav-text">1、虚拟机网络模式设置为NAT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、克隆虚拟机"><span class="nav-number">1.2.</span> <span class="nav-text">2、克隆虚拟机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、修改为静态ip"><span class="nav-number">1.3.</span> <span class="nav-text">3、修改为静态ip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、-修改主机名"><span class="nav-number">1.4.</span> <span class="nav-text">4、 修改主机名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、关闭防火墙"><span class="nav-number">1.5.</span> <span class="nav-text">5、关闭防火墙</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6、在opt目录下创建文件"><span class="nav-number">1.6.</span> <span class="nav-text">6、在opt目录下创建文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7、安装JDK"><span class="nav-number">1.7.</span> <span class="nav-text">7、安装JDK</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop运行环境搭建"><span class="nav-number">1.</span> <span class="nav-text">Hadoop运行环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、虚拟机网络模式设置为NAT"><span class="nav-number">1.1.</span> <span class="nav-text">1、虚拟机网络模式设置为NAT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、克隆虚拟机"><span class="nav-number">1.2.</span> <span class="nav-text">2、克隆虚拟机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、修改为静态ip"><span class="nav-number">1.3.</span> <span class="nav-text">3、修改为静态ip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、-修改主机名"><span class="nav-number">1.4.</span> <span class="nav-text">4、 修改主机名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、关闭防火墙"><span class="nav-number">1.5.</span> <span class="nav-text">5、关闭防火墙</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6、在opt目录下创建文件"><span class="nav-number">1.6.</span> <span class="nav-text">6、在opt目录下创建文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7、安装JDK"><span class="nav-number">1.7.</span> <span class="nav-text">7、安装JDK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8、安装Hadoop"><span class="nav-number">1.8.</span> <span class="nav-text">8、安装Hadoop</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -703,7 +731,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共9.3k字</span>
+  <span class="post-count">博客全站共11.5k字</span>
 </div>
         
 
