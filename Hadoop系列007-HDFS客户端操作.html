@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hadoop,HDFS,HDFS客户端,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="云端笑猿" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="本人微信公众号，欢迎扫码关注！   HDFS客户端操作1 环境准备1.1 Jar包准备1）解压hadoop-2.7.2.tar.gz到非中文目录 注意1：如果使用WinRAR解压报错的话，就使用超级管理员权限打开DOS窗口，然后cd到解压包所在位置，执行start winrar x -y xxx.tar.gz命令，即可成功 注意2：使用对应平台下编译后的hadoop源码包，即win7系统使用在w">
+<meta name="keywords" content="Hadoop,HDFS,HDFS客户端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop系列007-HDFS客户端操作">
+<meta property="og:url" content="http://yoursite.com/Hadoop系列007-HDFS客户端操作.html">
+<meta property="og:site_name" content="云端笑猿">
+<meta property="og:description" content="本人微信公众号，欢迎扫码关注！   HDFS客户端操作1 环境准备1.1 Jar包准备1）解压hadoop-2.7.2.tar.gz到非中文目录 注意1：如果使用WinRAR解压报错的话，就使用超级管理员权限打开DOS窗口，然后cd到解压包所在位置，执行start winrar x -y xxx.tar.gz命令，即可成功 注意2：使用对应平台下编译后的hadoop源码包，即win7系统使用在w">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://images.intflag.com/introduce2.jpg">
+<meta property="og:image" content="http://images.intflag.com/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AF002.jpg">
+<meta property="og:image" content="http://images.intflag.com/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AF001.jpg">
+<meta property="og:image" content="http://images.intflag.com/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AF003.jpg">
+<meta property="og:image" content="http://images.intflag.com/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AF004.jpg">
+<meta property="og:image" content="http://images.intflag.com/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AF005.jpg">
+<meta property="og:image" content="http://images.intflag.com/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AF006.jpg">
+<meta property="og:image" content="http://images.intflag.com/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AF007.jpg">
+<meta property="og:image" content="http://images.intflag.com/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AF008.jpg">
+<meta property="og:updated_time" content="2018-12-06T07:52:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop系列007-HDFS客户端操作">
+<meta name="twitter:description" content="本人微信公众号，欢迎扫码关注！   HDFS客户端操作1 环境准备1.1 Jar包准备1）解压hadoop-2.7.2.tar.gz到非中文目录 注意1：如果使用WinRAR解压报错的话，就使用超级管理员权限打开DOS窗口，然后cd到解压包所在位置，执行start winrar x -y xxx.tar.gz命令，即可成功 注意2：使用对应平台下编译后的hadoop源码包，即win7系统使用在w">
+<meta name="twitter:image" content="http://images.intflag.com/introduce2.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/Hadoop系列007-HDFS客户端操作.html">
+
+
+
+
+
+  <title>Hadoop系列007-HDFS客户端操作 | 云端笑猿</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笑猿</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">现实中的那些纷纷扰扰，都无非是过眼云烟；你在人生的战场上追名逐利，不得解脱；我在我的代码世界中，宁静致远，深藏功与名。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Hadoop系列007-HDFS客户端操作.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="云端笑猿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笑猿">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hadoop系列007-HDFS客户端操作</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-06T15:52:55+08:00">
+                2018-12-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-12-06T15:52:55+08:00">
+                2018-12-06
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本人微信公众号，欢迎扫码关注！</p>
+</blockquote>
+<p><img src="http://images.intflag.com/introduce2.jpg" alt=""></p>
+<h2 id="HDFS客户端操作"><a href="#HDFS客户端操作" class="headerlink" title="HDFS客户端操作"></a>HDFS客户端操作</h2><h4 id="1-环境准备"><a href="#1-环境准备" class="headerlink" title="1 环境准备"></a>1 环境准备</h4><h5 id="1-1-Jar包准备"><a href="#1-1-Jar包准备" class="headerlink" title="1.1 Jar包准备"></a>1.1 Jar包准备</h5><p>1）解压hadoop-2.7.2.tar.gz到非中文目录</p>
+<p><strong>注意1：如果使用WinRAR解压报错的话，就使用超级管理员权限打开DOS窗口，然后cd到解压包所在位置，执行start winrar x -y xxx.tar.gz命令，即可成功</strong></p>
+<p><strong>注意2：使用对应平台下编译后的hadoop源码包，即win7系统使用在win7下编译后的源码包，win10同理。</strong></p>
+<p><img src="http://images.intflag.com/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AF002.jpg" alt=""></p>
+<p>2）进入share文件夹，查找所有jar包，并把jar包拷贝到_lib文件夹下</p>
+<p>3）在全部jar包中查找.source.jar，并剪切到_source文件夹。</p>
+<p>4）在全部jar包中查找tests.jar，并剪切到_test文件夹。</p>
+<p><img src="http://images.intflag.com/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AF001.jpg" alt=""></p>
+<h5 id="1-2-IDEA准备"><a href="#1-2-IDEA准备" class="headerlink" title="1.2 IDEA准备"></a>1.2 IDEA准备</h5><p>1）配置HADOOP_HOME环境变量</p>
+<p><img src="http://images.intflag.com/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AF003.jpg" alt=""></p>
+<p>2）建立工程并且添加依赖</p>
+<p><img src="http://images.intflag.com/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AF004.jpg" alt=""></p>
+<p><strong>注意：Eclipse全选Jar包右键Add Build Path</strong></p>
+<p>3）编写代码测试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//1 加载配置</span></span><br><span class="line">    Configuration configuration = <span class="keyword">new</span> Configuration();</span><br><span class="line">    configuration.set(<span class="string">"fs.defaultFS"</span>, <span class="string">"hdfs://hadoop102:8020"</span>);</span><br><span class="line"></span><br><span class="line">    FileSystem fileSystem = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">//2 获取文件系统</span></span><br><span class="line">        fileSystem = FileSystem.get(configuration);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//3 上传文件到HDFS指定位置</span></span><br><span class="line">        fileSystem.copyFromLocalFile(<span class="keyword">new</span> Path(<span class="string">"D:/test/asd.txt"</span>), <span class="keyword">new</span> Path(<span class="string">"/user/intflag/input/asd.txt"</span>));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        closeFileSystem(fileSystem);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4）执行程序</p>
+<p><strong>客户端去操作hdfs时，是有一个用户身份的。默认情况下，hdfs客户端api会从jvm中获取一个参数来作为自己的用户身份：-DHADOOP_USER_NAME=atguigu，atguigu为用户名称。</strong></p>
+<p><img src="http://images.intflag.com/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AF005.jpg" alt=""></p>
+<p><img src="http://images.intflag.com/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AF006.jpg" alt=""></p>
+<p>5）验证</p>
+<p><img src="http://images.intflag.com/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AF007.jpg" alt=""></p>
+<h4 id="2-通过API操作HDFS"><a href="#2-通过API操作HDFS" class="headerlink" title="2 通过API操作HDFS"></a>2 通过API操作HDFS</h4><h5 id="2-1-HDFS获取文件系统"><a href="#2-1-HDFS获取文件系统" class="headerlink" title="2.1 HDFS获取文件系统"></a>2.1 HDFS获取文件系统</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void getFileSystem() &#123;</span><br><span class="line">    // 1 创建配置对象</span><br><span class="line">    Configuration conf = new Configuration();</span><br><span class="line">    // 2 获取文件系统</span><br><span class="line">    FileSystem fs = null;</span><br><span class="line">    try &#123;</span><br><span class="line">        fs = FileSystem.get(new URI(&quot;hdfs://hadoop102:8020&quot;), conf, &quot;intflag&quot;);</span><br><span class="line"></span><br><span class="line">        // 3 打印文件系统</span><br><span class="line">        System.out.println(fs);</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; catch (InterruptedException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; catch (URISyntaxException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        if (fs != null) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                fs.close();</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://images.intflag.com/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AF008.jpg" alt=""></p>
+<h5 id="2-2-HDFS文件上传"><a href="#2-2-HDFS文件上传" class="headerlink" title="2.2 HDFS文件上传"></a>2.2 HDFS文件上传</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void putFileToHDFS() &#123;</span><br><span class="line">    // 1 获取文件系统</span><br><span class="line">    FileSystem fs = getFileSystem();</span><br><span class="line">    // 2 上传文件</span><br><span class="line">    try &#123;</span><br><span class="line">        fs.copyFromLocalFile(true,new Path(&quot;D:/test/x3.000&quot;), new Path(&quot;/user/intflag/input/x3.000&quot;));</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        // 3 关闭资源</span><br><span class="line">        closeFileSystem(fs);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-3-HDFS文件下载"><a href="#2-3-HDFS文件下载" class="headerlink" title="2.3 HDFS文件下载"></a>2.3 HDFS文件下载</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void getFileFromHDFS() &#123;</span><br><span class="line">    // 1 获取文件系统</span><br><span class="line">    FileSystem fs = getFileSystem();</span><br><span class="line">    // 2 下载文件</span><br><span class="line">    try &#123;</span><br><span class="line">        fs.copyToLocalFile(new Path(&quot;/user/intflag/input/x3.000&quot;),new Path(&quot;D:/test/x3.000&quot;));</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        // 3 关闭资源</span><br><span class="line">        closeFileSystem(fs);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-4-HDFS目录创建"><a href="#2-4-HDFS目录创建" class="headerlink" title="2.4 HDFS目录创建"></a>2.4 HDFS目录创建</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 在HDFS上创建文件夹</span><br><span class="line"> */</span><br><span class="line">@Test</span><br><span class="line">public void mkdirAtHDFS() &#123;</span><br><span class="line">    // 1 获取文件系统</span><br><span class="line">    FileSystem fs = getFileSystem();</span><br><span class="line">    // 2 创建文件夹</span><br><span class="line">    try &#123;</span><br><span class="line">        fs.mkdirs(new Path(&quot;/user/intflag/test&quot;));</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        // 3 关闭资源</span><br><span class="line">        closeFileSystem(fs);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-5-HDFS文件夹删除"><a href="#2-5-HDFS文件夹删除" class="headerlink" title="2.5 HDFS文件夹删除"></a>2.5 HDFS文件夹删除</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 删除HDFS上的文件夹</span><br><span class="line"> */</span><br><span class="line">@Test</span><br><span class="line">public void deleteDirAtHDFS() &#123;</span><br><span class="line">    // 1 获取文件系统</span><br><span class="line">    FileSystem fs = getFileSystem();</span><br><span class="line">    // 2 删除文件夹</span><br><span class="line">    try &#123;</span><br><span class="line">        //fs.delete(new Path(&quot;/user/intflag/test&quot;));</span><br><span class="line">        fs.delete(new Path(&quot;/user/intflag/test&quot;),true);</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        // 3 关闭资源</span><br><span class="line">        closeFileSystem(fs);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-6-HDFS文件名更改"><a href="#2-6-HDFS文件名更改" class="headerlink" title="2.6 HDFS文件名更改"></a>2.6 HDFS文件名更改</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 重命名HDFS上的文件夹</span><br><span class="line"> */</span><br><span class="line">@Test</span><br><span class="line">public void renameDirAtHDFS() &#123;</span><br><span class="line">    // 1 获取文件系统</span><br><span class="line">    FileSystem fs = getFileSystem();</span><br><span class="line">    // 2 重命名文件夹</span><br><span class="line">    try &#123;</span><br><span class="line">        fs.rename(new Path(&quot;/user/intflag/test&quot;), new Path(&quot;/user/intflag/test22&quot;));</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        // 3 关闭资源</span><br><span class="line">        closeFileSystem(fs);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-7-HDFS文件详情查看"><a href="#2-7-HDFS文件详情查看" class="headerlink" title="2.7 HDFS文件详情查看"></a>2.7 HDFS文件详情查看</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 读取HDFS上的文件信息</span><br><span class="line"> */</span><br><span class="line">@Test</span><br><span class="line">public void readFileAtHDFS() &#123;</span><br><span class="line">    // 1 获取文件系统</span><br><span class="line">    FileSystem fs = getFileSystem();</span><br><span class="line">    // 2 读取文件信息</span><br><span class="line">    try &#123;</span><br><span class="line">        RemoteIterator&lt;LocatedFileStatus&gt; listFiles = fs.listFiles(new Path(&quot;/&quot;), true);</span><br><span class="line">        while (listFiles.hasNext()) &#123;</span><br><span class="line">            LocatedFileStatus status = listFiles.next();</span><br><span class="line">            System.out.println(&quot;-----------------------------------&quot;);</span><br><span class="line">            System.out.println(&quot;文件名称：&quot;+status.getPath().getName());</span><br><span class="line">            System.out.println(&quot;块的大小：&quot;+status.getBlockSize());</span><br><span class="line">            System.out.println(&quot;内容长度：&quot;+status.getLen());</span><br><span class="line">            System.out.println(&quot;文件权限：&quot;+status.getPermission());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        // 3 关闭资源</span><br><span class="line">        closeFileSystem(fs);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">-----------------------------------</span><br><span class="line">文件名称：asd.txt</span><br><span class="line">块的大小：134217728</span><br><span class="line">内容长度：34</span><br><span class="line">文件权限：rw-r--r--</span><br><span class="line">-----------------------------------</span><br><span class="line">文件名称：hadoop-2.7.2.tar.gz</span><br><span class="line">块的大小：134217728</span><br><span class="line">内容长度：197657687</span><br><span class="line">文件权限：rw-r--r--</span><br><span class="line">-----------------------------------</span><br><span class="line">文件名称：liugx.txt</span><br><span class="line">块的大小：134217728</span><br><span class="line">内容长度：64</span><br><span class="line">文件权限：rw-r--r--</span><br><span class="line">-----------------------------------</span><br><span class="line">文件名称：x3.000</span><br><span class="line">块的大小：134217728</span><br><span class="line">内容长度：592</span><br><span class="line">文件权限：rw-r--r--</span><br><span class="line"></span><br><span class="line">Process finished with exit code 0</span><br></pre></td></tr></table></figure>
+<h5 id="2-8-HDFS文件夹查看"><a href="#2-8-HDFS文件夹查看" class="headerlink" title="2.8 HDFS文件夹查看"></a>2.8 HDFS文件夹查看</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 读取文件夹信息</span><br><span class="line"> */</span><br><span class="line">@Test</span><br><span class="line">public void readFfolderAtHDFS() &#123;</span><br><span class="line">    // 1 获取文件系统</span><br><span class="line">    FileSystem fs = getFileSystem();</span><br><span class="line">    // 2 读取文件夹信息</span><br><span class="line">    try &#123;</span><br><span class="line">        FileStatus[] listStatus = fs.listStatus(new Path(&quot;/user/intflag/&quot;));</span><br><span class="line">        for (FileStatus status : listStatus) &#123;</span><br><span class="line">            if (status.isFile()) &#123;</span><br><span class="line">                System.out.println(&quot;f----&quot;+status.getPath().getName());</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                System.out.println(&quot;d----&quot;+status.getPath().getName());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        // 3 关闭资源</span><br><span class="line">        closeFileSystem(fs);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-通过IO流操作HDFS"><a href="#3-通过IO流操作HDFS" class="headerlink" title="3 通过IO流操作HDFS"></a>3 通过IO流操作HDFS</h4><h5 id="3-1-HDFS文件上传"><a href="#3-1-HDFS文件上传" class="headerlink" title="3.1 HDFS文件上传"></a>3.1 HDFS文件上传</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 文件上传到HDFS</span><br><span class="line"> */</span><br><span class="line">@Test</span><br><span class="line">public void putFileToHDFS() &#123;</span><br><span class="line">    // 1 获取HDFS</span><br><span class="line">    FileSystem fs = getFileSystem();</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">        // 2 获取输出流</span><br><span class="line">        FSDataOutputStream fos = fs.create(new Path(&quot;/user/intflag/input/x3.000&quot;));</span><br><span class="line">        // 3 获取输入流</span><br><span class="line">        FileInputStream fis = new FileInputStream(new File(&quot;D:/test/x3.000&quot;));</span><br><span class="line">        // 4 流对接</span><br><span class="line">        IOUtils.copyBytes(fis, fos, new Configuration());</span><br><span class="line">        // 5 关闭流</span><br><span class="line">        IOUtils.closeStream(fis);</span><br><span class="line">        IOUtils.closeStream(fos);</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        // 5 关闭资源</span><br><span class="line">        closeFileSystem(fs);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="3-2-HDFS文件下载"><a href="#3-2-HDFS文件下载" class="headerlink" title="3.2 HDFS文件下载"></a>3.2 HDFS文件下载</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 下载文件</span><br><span class="line"> */</span><br><span class="line">@Test</span><br><span class="line">public void getFileFromHDFS() &#123;</span><br><span class="line">    // 1 获取HDFS</span><br><span class="line">    FileSystem fs = getFileSystem();</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">        // 2 获取输入流</span><br><span class="line">        FSDataInputStream fis = fs.open(new Path(&quot;/user/intflag/input/liugx.txt&quot;));</span><br><span class="line"></span><br><span class="line">        // 3 获取输出流</span><br><span class="line">        FileOutputStream fos = new FileOutputStream(new File(&quot;D:/test/liugx.txt&quot;));</span><br><span class="line"></span><br><span class="line">        // 4 流对接</span><br><span class="line">        IOUtils.copyBytes(fis, fos, new Configuration());</span><br><span class="line">        // 5 关闭流</span><br><span class="line">        IOUtils.closeStream(fis);</span><br><span class="line">        IOUtils.closeStream(fos);</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        // 5 关闭资源</span><br><span class="line">        closeFileSystem(fs);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="3-3-定位文件读取"><a href="#3-3-定位文件读取" class="headerlink" title="3.3 定位文件读取"></a>3.3 定位文件读取</h5><p>下载第一块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 下载大文件-下载第一块</span><br><span class="line"> */</span><br><span class="line">@Test</span><br><span class="line">public void getFileFromHDFSSeek1() &#123;</span><br><span class="line">    // 1 获取HDFS</span><br><span class="line">    FileSystem fs = getFileSystem();</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">        // 2 获取输入流</span><br><span class="line">        FSDataInputStream fis = fs.open(new Path(&quot;/user/intflag/input/hadoop-2.7.2.tar.gz&quot;));</span><br><span class="line"></span><br><span class="line">        // 3 获取输出流</span><br><span class="line">        FileOutputStream fos = new FileOutputStream(new File(&quot;D:/test/hadoop-2.7.2.tar.gz.part1&quot;));</span><br><span class="line"></span><br><span class="line">        // 4 流对接（只读取128m）</span><br><span class="line">        byte[] buff = new byte[1024];</span><br><span class="line">        //1024 * 1024 * 128</span><br><span class="line">        int len = 1024 * 128;</span><br><span class="line">        for (int i = 0; i &lt; len; i++) &#123;</span><br><span class="line">            fis.read(buff);</span><br><span class="line">            fos.write(buff);</span><br><span class="line">        &#125;</span><br><span class="line">        // 5 关闭流</span><br><span class="line">        IOUtils.closeStream(fis);</span><br><span class="line">        IOUtils.closeStream(fos);</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        // 5 关闭资源</span><br><span class="line">        closeFileSystem(fs);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下载第二块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 下载大文件-下载第二块</span><br><span class="line"> */</span><br><span class="line">@Test</span><br><span class="line">public void getFileFromHDFSSeek2() &#123;</span><br><span class="line">    // 1 获取HDFS</span><br><span class="line">    FileSystem fs = getFileSystem();</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">        // 2 获取输入流</span><br><span class="line">        FSDataInputStream fis = fs.open(new Path(&quot;/user/intflag/input/hadoop-2.7.2.tar.gz&quot;));</span><br><span class="line"></span><br><span class="line">        // 3 获取输出流</span><br><span class="line">        FileOutputStream fos = new FileOutputStream(new File(&quot;D:/test/hadoop-2.7.2.tar.gz.part2&quot;));</span><br><span class="line"></span><br><span class="line">        // 4 流对接（只读取128m）</span><br><span class="line">        // 定位到128m</span><br><span class="line">        int len = 1024 * 1024 * 128;</span><br><span class="line">        fis.seek(len);</span><br><span class="line">        IOUtils.copyBytes(fis,fos,new Configuration());</span><br><span class="line"></span><br><span class="line">        // 5 关闭流</span><br><span class="line">        IOUtils.closeStream(fis);</span><br><span class="line">        IOUtils.closeStream(fos);</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        // 5 关闭资源</span><br><span class="line">        closeFileSystem(fs);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>合并文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">打开DOS窗口，定位到下载后的位置，输入以下命令合并文件</span><br><span class="line">type hadoop-2.7.2.tar.gz.part2 &gt;&gt; hadoop-2.7.2.tar.gz.part1</span><br><span class="line">然后重命名文件hadoop-2.7.2.tar.gz.part1，将文件.part1去掉</span><br><span class="line">打开文件验证</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag"><i class="fa fa-tag"></i> Hadoop</a>
+          
+            <a href="/tags/HDFS/" rel="tag"><i class="fa fa-tag"></i> HDFS</a>
+          
+            <a href="/tags/HDFS客户端/" rel="tag"><i class="fa fa-tag"></i> HDFS客户端</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Hadoop系列006-HDFS概念及命令行操作.html" rel="next" title="Hadoop系列006-HDFS概念及命令行操作">
+                <i class="fa fa-chevron-left"></i> Hadoop系列006-HDFS概念及命令行操作
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Hadoop系列008-HDFS的数据流.html" rel="prev" title="Hadoop系列008-HDFS的数据流">
+                Hadoop系列008-HDFS的数据流 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="云端笑猿">
+            
+              <p class="site-author-name" itemprop="name">云端笑猿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://me.csdn.net/intflag" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-compass"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/44e9b3d6ab4a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/intflag/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-crop"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/intflag/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-binoculars"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5bdacfdc6fb9a022852a762d" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-spinner"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HDFS客户端操作"><span class="nav-number">1.</span> <span class="nav-text">HDFS客户端操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-环境准备"><span class="nav-number">1.0.1.</span> <span class="nav-text">1 环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-Jar包准备"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">1.1 Jar包准备</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-IDEA准备"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">1.2 IDEA准备</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-通过API操作HDFS"><span class="nav-number">1.0.2.</span> <span class="nav-text">2 通过API操作HDFS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-HDFS获取文件系统"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">2.1 HDFS获取文件系统</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-HDFS文件上传"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">2.2 HDFS文件上传</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-HDFS文件下载"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">2.3 HDFS文件下载</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-4-HDFS目录创建"><span class="nav-number">1.0.2.4.</span> <span class="nav-text">2.4 HDFS目录创建</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-5-HDFS文件夹删除"><span class="nav-number">1.0.2.5.</span> <span class="nav-text">2.5 HDFS文件夹删除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-HDFS文件名更改"><span class="nav-number">1.0.2.6.</span> <span class="nav-text">2.6 HDFS文件名更改</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-7-HDFS文件详情查看"><span class="nav-number">1.0.2.7.</span> <span class="nav-text">2.7 HDFS文件详情查看</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-8-HDFS文件夹查看"><span class="nav-number">1.0.2.8.</span> <span class="nav-text">2.8 HDFS文件夹查看</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-通过IO流操作HDFS"><span class="nav-number">1.0.3.</span> <span class="nav-text">3 通过IO流操作HDFS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-HDFS文件上传"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">3.1 HDFS文件上传</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-HDFS文件下载"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">3.2 HDFS文件下载</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-定位文件读取"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">3.3 定位文件读取</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">云端笑猿</span>
+
+  
+</div>
+
+
+  <div class="powered-by">
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_uv"></span>
+  </span>
+  </div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共18.2k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

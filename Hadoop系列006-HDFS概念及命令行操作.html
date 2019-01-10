@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hadoop,HDFS,文件系统,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="云端笑猿" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="本人微信公众号，欢迎扫码关注！   HDFS概念及命令行操作一、HDFS概念1.1 概念HDFS，它是一个文件系统，用于存储文件，通过目录树来定位文件；其次，它是分布式的，由很多服务器联合起来实现其功能，集群中的服务器有各自的角色。 HDFS的设计适合一次写入，多次读出的场景，且不支持文件的修改。适合用来做数据分析，并不适合用来做网盘应用。 1.2 组成1）HDFS集群包括，NameNode和D">
+<meta name="keywords" content="Hadoop,HDFS,文件系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop系列006-HDFS概念及命令行操作">
+<meta property="og:url" content="http://yoursite.com/Hadoop系列006-HDFS概念及命令行操作.html">
+<meta property="og:site_name" content="云端笑猿">
+<meta property="og:description" content="本人微信公众号，欢迎扫码关注！   HDFS概念及命令行操作一、HDFS概念1.1 概念HDFS，它是一个文件系统，用于存储文件，通过目录树来定位文件；其次，它是分布式的，由很多服务器联合起来实现其功能，集群中的服务器有各自的角色。 HDFS的设计适合一次写入，多次读出的场景，且不支持文件的修改。适合用来做数据分析，并不适合用来做网盘应用。 1.2 组成1）HDFS集群包括，NameNode和D">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://images.intflag.com/introduce2.jpg">
+<meta property="og:image" content="http://images.intflag.com/HDFS001.jpg">
+<meta property="og:updated_time" content="2018-12-03T06:14:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop系列006-HDFS概念及命令行操作">
+<meta name="twitter:description" content="本人微信公众号，欢迎扫码关注！   HDFS概念及命令行操作一、HDFS概念1.1 概念HDFS，它是一个文件系统，用于存储文件，通过目录树来定位文件；其次，它是分布式的，由很多服务器联合起来实现其功能，集群中的服务器有各自的角色。 HDFS的设计适合一次写入，多次读出的场景，且不支持文件的修改。适合用来做数据分析，并不适合用来做网盘应用。 1.2 组成1）HDFS集群包括，NameNode和D">
+<meta name="twitter:image" content="http://images.intflag.com/introduce2.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/Hadoop系列006-HDFS概念及命令行操作.html">
+
+
+
+
+
+  <title>Hadoop系列006-HDFS概念及命令行操作 | 云端笑猿</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笑猿</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">现实中的那些纷纷扰扰，都无非是过眼云烟；你在人生的战场上追名逐利，不得解脱；我在我的代码世界中，宁静致远，深藏功与名。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Hadoop系列006-HDFS概念及命令行操作.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="云端笑猿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笑猿">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hadoop系列006-HDFS概念及命令行操作</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-03T14:14:06+08:00">
+                2018-12-03
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-12-03T14:14:06+08:00">
+                2018-12-03
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本人微信公众号，欢迎扫码关注！</p>
+</blockquote>
+<p><img src="http://images.intflag.com/introduce2.jpg" alt=""></p>
+<h2 id="HDFS概念及命令行操作"><a href="#HDFS概念及命令行操作" class="headerlink" title="HDFS概念及命令行操作"></a>HDFS概念及命令行操作</h2><h3 id="一、HDFS概念"><a href="#一、HDFS概念" class="headerlink" title="一、HDFS概念"></a>一、HDFS概念</h3><h4 id="1-1-概念"><a href="#1-1-概念" class="headerlink" title="1.1 概念"></a>1.1 概念</h4><p>HDFS，它是一个文件系统，用于存储文件，通过目录树来定位文件；其次，它是分布式的，由很多服务器联合起来实现其功能，集群中的服务器有各自的角色。</p>
+<p>HDFS的设计适合一次写入，多次读出的场景，且不支持文件的修改。适合用来做数据分析，并不适合用来做网盘应用。</p>
+<h4 id="1-2-组成"><a href="#1-2-组成" class="headerlink" title="1.2 组成"></a>1.2 组成</h4><p>1）HDFS集群包括，NameNode和DataNode以及Secondary Namenode。</p>
+<p>2）NameNode负责管理整个文件系统的元数据，以及每一个路径（文件）所对应的数据块信息。</p>
+<p>3）DataNode 负责管理用户的文件数据块，每一个数据块都可以在多个datanode上存储多个副本。</p>
+<p>4）Secondary NameNode用来监控HDFS状态的辅助后台程序，每隔一段时间获取HDFS元数据的快照。</p>
+<h4 id="1-3-HDFS-文件块大小"><a href="#1-3-HDFS-文件块大小" class="headerlink" title="1.3 HDFS 文件块大小"></a>1.3 HDFS 文件块大小</h4><ul>
+<li><p>HDFS中的文件在物理上是分块存储（block），块的大小可以通过配置参数( dfs.blocksize)来规定，默认大小在hadoop2.x版本中是128M，老版本中是64M</p>
+</li>
+<li><p>HDFS的块比磁盘的块大，其目的是为了最小化寻址开销。如果块设置得足够大，从磁盘传输数据的时间会明显大于定位这个块开始位置所需的时间。因而，传输一个由多个块组成的文件的时间取决于磁盘传输速率。</p>
+</li>
+<li><p>如果寻址时间约为10ms，而传输速率为100MB/s，为了使寻址时间仅占传输时间的1%，我们要将块大小设置约为100MB。默认的块大小实际为64MB，但是很多情况下HDFS使用128MB的块设置。</p>
+</li>
+<li><p>块的大小：10ms x 100 x 100M/s = 100M</p>
+</li>
+</ul>
+<p><img src="http://images.intflag.com/HDFS001.jpg" alt="计算规则"></p>
+<h3 id="二、HFDS命令行操作"><a href="#二、HFDS命令行操作" class="headerlink" title="二、HFDS命令行操作"></a>二、HFDS命令行操作</h3><h4 id="2-1-基本语法"><a href="#2-1-基本语法" class="headerlink" title="2.1 基本语法"></a>2.1 基本语法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hadoop fs 具体命令</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-参数大全"><a href="#2-2-参数大全" class="headerlink" title="2.2 参数大全"></a>2.2 参数大全</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">bin/hadoop fs</span><br><span class="line">		[-appendToFile &lt;localsrc&gt; ... &lt;dst&gt;]</span><br><span class="line">        [-cat [-ignoreCrc] &lt;src&gt; ...]</span><br><span class="line">        [-checksum &lt;src&gt; ...]</span><br><span class="line">        [-chgrp [-R] GROUP PATH...]</span><br><span class="line">        [-chmod [-R] &lt;MODE[,MODE]... | OCTALMODE&gt; PATH...]</span><br><span class="line">        [-chown [-R] [OWNER][:[GROUP]] PATH...]</span><br><span class="line">        [-copyFromLocal [-f] [-p] &lt;localsrc&gt; ... &lt;dst&gt;]</span><br><span class="line">        [-copyToLocal [-p] [-ignoreCrc] [-crc] &lt;src&gt; ... &lt;localdst&gt;]</span><br><span class="line">        [-count [-q] &lt;path&gt; ...]</span><br><span class="line">        [-cp [-f] [-p] &lt;src&gt; ... &lt;dst&gt;]</span><br><span class="line">        [-createSnapshot &lt;snapshotDir&gt; [&lt;snapshotName&gt;]]</span><br><span class="line">        [-deleteSnapshot &lt;snapshotDir&gt; &lt;snapshotName&gt;]</span><br><span class="line">        [-df [-h] [&lt;path&gt; ...]]</span><br><span class="line">        [-du [-s] [-h] &lt;path&gt; ...]</span><br><span class="line">        [-expunge]</span><br><span class="line">        [-get [-p] [-ignoreCrc] [-crc] &lt;src&gt; ... &lt;localdst&gt;]</span><br><span class="line">        [-getfacl [-R] &lt;path&gt;]</span><br><span class="line">        [-getmerge [-nl] &lt;src&gt; &lt;localdst&gt;]</span><br><span class="line">        [-help [cmd ...]]</span><br><span class="line">        [-ls [-d] [-h] [-R] [&lt;path&gt; ...]]</span><br><span class="line">        [-mkdir [-p] &lt;path&gt; ...]</span><br><span class="line">        [-moveFromLocal &lt;localsrc&gt; ... &lt;dst&gt;]</span><br><span class="line">        [-moveToLocal &lt;src&gt; &lt;localdst&gt;]</span><br><span class="line">        [-mv &lt;src&gt; ... &lt;dst&gt;]</span><br><span class="line">        [-put [-f] [-p] &lt;localsrc&gt; ... &lt;dst&gt;]</span><br><span class="line">        [-renameSnapshot &lt;snapshotDir&gt; &lt;oldName&gt; &lt;newName&gt;]</span><br><span class="line">        [-rm [-f] [-r|-R] [-skipTrash] &lt;src&gt; ...]</span><br><span class="line">        [-rmdir [--ignore-fail-on-non-empty] &lt;dir&gt; ...]</span><br><span class="line">        [-setfacl [-R] [&#123;-b|-k&#125; &#123;-m|-x &lt;acl_spec&gt;&#125; &lt;path&gt;]|[--set &lt;acl_spec&gt; &lt;path&gt;]]</span><br><span class="line">        [-setrep [-R] [-w] &lt;rep&gt; &lt;path&gt; ...]</span><br><span class="line">        [-stat [format] &lt;path&gt; ...]</span><br><span class="line">        [-tail [-f] &lt;file&gt;]</span><br><span class="line">        [-test -[defsz] &lt;path&gt;]</span><br><span class="line">        [-text [-ignoreCrc] &lt;src&gt; ...]</span><br><span class="line">        [-touchz &lt;path&gt; ...]</span><br><span class="line">        [-usage [cmd ...]]</span><br></pre></td></tr></table></figure>
+<h4 id="3-3-常用命令实操"><a href="#3-3-常用命令实操" class="headerlink" title="3.3 常用命令实操"></a>3.3 常用命令实操</h4><h5 id="（1）-help：输出这个命令参数"><a href="#（1）-help：输出这个命令参数" class="headerlink" title="（1）-help：输出这个命令参数"></a>（1）-help：输出这个命令参数</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs dfs -help rm</span><br></pre></td></tr></table></figure>
+<h5 id="（2）-ls-显示目录信息"><a href="#（2）-ls-显示目录信息" class="headerlink" title="（2）-ls: 显示目录信息"></a>（2）-ls: 显示目录信息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -ls /</span><br></pre></td></tr></table></figure>
+<h5 id="（3）-mkdir：在hdfs上创建目录"><a href="#（3）-mkdir：在hdfs上创建目录" class="headerlink" title="（3）-mkdir：在hdfs上创建目录"></a>（3）-mkdir：在hdfs上创建目录</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs  -mkdir  -p  /aaa/bbb/cc/dd</span><br></pre></td></tr></table></figure>
+<h5 id="（4）-moveFromLocal从本地剪切粘贴到hdfs"><a href="#（4）-moveFromLocal从本地剪切粘贴到hdfs" class="headerlink" title="（4）-moveFromLocal从本地剪切粘贴到hdfs"></a>（4）-moveFromLocal从本地剪切粘贴到hdfs</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop  fs  - moveFromLocal  /home/hadoop/a.txt  /aaa/bbb/cc/dd</span><br></pre></td></tr></table></figure>
+<h5 id="（5）-moveToLocal：从hdfs剪切粘贴到本地"><a href="#（5）-moveToLocal：从hdfs剪切粘贴到本地" class="headerlink" title="（5）-moveToLocal：从hdfs剪切粘贴到本地"></a>（5）-moveToLocal：从hdfs剪切粘贴到本地</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop  fs  - moveToLocal   /aaa/bbb/cc/dd  /home/hadoop/a.txt</span><br></pre></td></tr></table></figure>
+<h5 id="（6）-appendToFile-：追加一个文件到已经存在的文件末尾"><a href="#（6）-appendToFile-：追加一个文件到已经存在的文件末尾" class="headerlink" title="（6）-appendToFile  ：追加一个文件到已经存在的文件末尾"></a>（6）-appendToFile  ：追加一个文件到已经存在的文件末尾</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop  fs  -appendToFile  ./hello.txt  /hello.txt</span><br></pre></td></tr></table></figure>
+<h5 id="（7）-cat-：显示文件内容"><a href="#（7）-cat-：显示文件内容" class="headerlink" title="（7）-cat ：显示文件内容"></a>（7）-cat ：显示文件内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -cat /user/intflag/input/liugx.txt</span><br></pre></td></tr></table></figure>
+<h5 id="（8）-tail：显示一个文件的末尾"><a href="#（8）-tail：显示一个文件的末尾" class="headerlink" title="（8）-tail：显示一个文件的末尾"></a>（8）-tail：显示一个文件的末尾</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop  fs  -tail  /weblog/access_log.1</span><br></pre></td></tr></table></figure>
+<h5 id="（9）-text：以字符形式打印一个文件的内容"><a href="#（9）-text：以字符形式打印一个文件的内容" class="headerlink" title="（9）-text：以字符形式打印一个文件的内容"></a>（9）-text：以字符形式打印一个文件的内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop  fs  -text  /weblog/access_log.1</span><br></pre></td></tr></table></figure>
+<h5 id="（10）-chgrp-、-chmod、-chown：linux文件系统中的用法一样，修改文件所属权限"><a href="#（10）-chgrp-、-chmod、-chown：linux文件系统中的用法一样，修改文件所属权限" class="headerlink" title="（10）-chgrp 、-chmod、-chown：linux文件系统中的用法一样，修改文件所属权限"></a>（10）-chgrp 、-chmod、-chown：linux文件系统中的用法一样，修改文件所属权限</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hadoop  fs  -chmod  666  /hello.txt</span><br><span class="line">hadoop  fs  -chown  someuser:somegrp   /hello.txt</span><br></pre></td></tr></table></figure>
+<h5 id="（11）-copyFromLocal：从本地文件系统中拷贝文件到hdfs路径去"><a href="#（11）-copyFromLocal：从本地文件系统中拷贝文件到hdfs路径去" class="headerlink" title="（11）-copyFromLocal：从本地文件系统中拷贝文件到hdfs路径去"></a>（11）-copyFromLocal：从本地文件系统中拷贝文件到hdfs路径去</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop  fs  -copyFromLocal  ./jdk.tar.gz  /aaa/</span><br></pre></td></tr></table></figure>
+<h5 id="（12）-copyToLocal：从hdfs拷贝到本地"><a href="#（12）-copyToLocal：从hdfs拷贝到本地" class="headerlink" title="（12）-copyToLocal：从hdfs拷贝到本地"></a>（12）-copyToLocal：从hdfs拷贝到本地</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -copyToLocal /aaa/jdk.tar.gz</span><br></pre></td></tr></table></figure>
+<h5 id="（13）-cp-：从hdfs的一个路径拷贝到hdfs的另一个路径"><a href="#（13）-cp-：从hdfs的一个路径拷贝到hdfs的另一个路径" class="headerlink" title="（13）-cp ：从hdfs的一个路径拷贝到hdfs的另一个路径"></a>（13）-cp ：从hdfs的一个路径拷贝到hdfs的另一个路径</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop  fs  -cp  /aaa/jdk.tar.gz  /bbb/jdk.tar.gz.2</span><br></pre></td></tr></table></figure>
+<h5 id="（14）-mv：在hdfs目录中移动文件"><a href="#（14）-mv：在hdfs目录中移动文件" class="headerlink" title="（14）-mv：在hdfs目录中移动文件"></a>（14）-mv：在hdfs目录中移动文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop  fs  -mv  /aaa/jdk.tar.gz  /</span><br></pre></td></tr></table></figure>
+<h5 id="（15）-get：等同于copyToLocal，就是从hdfs下载文件到本地"><a href="#（15）-get：等同于copyToLocal，就是从hdfs下载文件到本地" class="headerlink" title="（15）-get：等同于copyToLocal，就是从hdfs下载文件到本地"></a>（15）-get：等同于copyToLocal，就是从hdfs下载文件到本地</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">（15）-get：等同于copyToLocal，就是从hdfs下载文件到本地</span><br></pre></td></tr></table></figure>
+<h5 id="（16）-getmerge-：合并下载多个文件，比如hdfs的目录-aaa-下有多个文件-log-1-log-2-log-3-…"><a href="#（16）-getmerge-：合并下载多个文件，比如hdfs的目录-aaa-下有多个文件-log-1-log-2-log-3-…" class="headerlink" title="（16）-getmerge  ：合并下载多个文件，比如hdfs的目录 /aaa/下有多个文件:log.1, log.2,log.3,…"></a>（16）-getmerge  ：合并下载多个文件，比如hdfs的目录 /aaa/下有多个文件:log.1, log.2,log.3,…</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -getmerge /aaa/log.* ./log.sum</span><br></pre></td></tr></table></figure>
+<h5 id="（17）-put：等同于copyFromLocal"><a href="#（17）-put：等同于copyFromLocal" class="headerlink" title="（17）-put：等同于copyFromLocal"></a>（17）-put：等同于copyFromLocal</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop  fs  -put  /aaa/jdk.tar.gz  /bbb/jdk.tar.gz.2</span><br></pre></td></tr></table></figure>
+<h5 id="（18）-rm：删除文件或文件夹"><a href="#（18）-rm：删除文件或文件夹" class="headerlink" title="（18）-rm：删除文件或文件夹"></a>（18）-rm：删除文件或文件夹</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -rm -r /aaa/bbb/</span><br></pre></td></tr></table></figure>
+<h5 id="（19）-rmdir：删除空目录"><a href="#（19）-rmdir：删除空目录" class="headerlink" title="（19）-rmdir：删除空目录"></a>（19）-rmdir：删除空目录</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop  fs  -rmdir   /aaa/bbb/ccc</span><br></pre></td></tr></table></figure>
+<h5 id="（20）-df-：统计文件系统的可用空间信息"><a href="#（20）-df-：统计文件系统的可用空间信息" class="headerlink" title="（20）-df ：统计文件系统的可用空间信息"></a>（20）-df ：统计文件系统的可用空间信息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop  fs  -df  -h  /</span><br></pre></td></tr></table></figure>
+<h5 id="（21）-du统计文件夹的大小信息"><a href="#（21）-du统计文件夹的大小信息" class="headerlink" title="（21）-du统计文件夹的大小信息"></a>（21）-du统计文件夹的大小信息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop  fs  -du  -s  -h /aaa/*</span><br></pre></td></tr></table></figure>
+<h5 id="（22）-count：统计一个指定目录下的文件节点数量"><a href="#（22）-count：统计一个指定目录下的文件节点数量" class="headerlink" title="（22）-count：统计一个指定目录下的文件节点数量"></a>（22）-count：统计一个指定目录下的文件节点数量</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -count /aaa/</span><br></pre></td></tr></table></figure>
+<h5 id="（23）-setrep：设置hdfs中文件的副本数量"><a href="#（23）-setrep：设置hdfs中文件的副本数量" class="headerlink" title="（23）-setrep：设置hdfs中文件的副本数量"></a>（23）-setrep：设置hdfs中文件的副本数量</h5><p><strong>注意：这里设置的副本数只是记录在namenode的元数据中，是否真的会有这么多副本，还得看datanode的数量。因为目前只有3台设备，最多也就3个副本，只有节点数的增加到10台时，副本数才能达到10。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -setrep 3 /aaa/jdk.tar.gz</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag"><i class="fa fa-tag"></i> Hadoop</a>
+          
+            <a href="/tags/HDFS/" rel="tag"><i class="fa fa-tag"></i> HDFS</a>
+          
+            <a href="/tags/文件系统/" rel="tag"><i class="fa fa-tag"></i> 文件系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Hadoop系列005-Hadoop运行模式（下）.html" rel="next" title="Hadoop系列005-Hadoop运行模式（下）">
+                <i class="fa fa-chevron-left"></i> Hadoop系列005-Hadoop运行模式（下）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Hadoop系列007-HDFS客户端操作.html" rel="prev" title="Hadoop系列007-HDFS客户端操作">
+                Hadoop系列007-HDFS客户端操作 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="云端笑猿">
+            
+              <p class="site-author-name" itemprop="name">云端笑猿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://me.csdn.net/intflag" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-compass"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/44e9b3d6ab4a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/intflag/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-crop"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/intflag/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-binoculars"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5bdacfdc6fb9a022852a762d" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-spinner"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HDFS概念及命令行操作"><span class="nav-number">1.</span> <span class="nav-text">HDFS概念及命令行操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、HDFS概念"><span class="nav-number">1.1.</span> <span class="nav-text">一、HDFS概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-概念"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-组成"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-HDFS-文件块大小"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 HDFS 文件块大小</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、HFDS命令行操作"><span class="nav-number">1.2.</span> <span class="nav-text">二、HFDS命令行操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-基本语法"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 基本语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-参数大全"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 参数大全</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-常用命令实操"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.3 常用命令实操</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#（1）-help：输出这个命令参数"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">（1）-help：输出这个命令参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（2）-ls-显示目录信息"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">（2）-ls: 显示目录信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（3）-mkdir：在hdfs上创建目录"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">（3）-mkdir：在hdfs上创建目录</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（4）-moveFromLocal从本地剪切粘贴到hdfs"><span class="nav-number">1.2.3.4.</span> <span class="nav-text">（4）-moveFromLocal从本地剪切粘贴到hdfs</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（5）-moveToLocal：从hdfs剪切粘贴到本地"><span class="nav-number">1.2.3.5.</span> <span class="nav-text">（5）-moveToLocal：从hdfs剪切粘贴到本地</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（6）-appendToFile-：追加一个文件到已经存在的文件末尾"><span class="nav-number">1.2.3.6.</span> <span class="nav-text">（6）-appendToFile  ：追加一个文件到已经存在的文件末尾</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（7）-cat-：显示文件内容"><span class="nav-number">1.2.3.7.</span> <span class="nav-text">（7）-cat ：显示文件内容</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（8）-tail：显示一个文件的末尾"><span class="nav-number">1.2.3.8.</span> <span class="nav-text">（8）-tail：显示一个文件的末尾</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（9）-text：以字符形式打印一个文件的内容"><span class="nav-number">1.2.3.9.</span> <span class="nav-text">（9）-text：以字符形式打印一个文件的内容</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（10）-chgrp-、-chmod、-chown：linux文件系统中的用法一样，修改文件所属权限"><span class="nav-number">1.2.3.10.</span> <span class="nav-text">（10）-chgrp 、-chmod、-chown：linux文件系统中的用法一样，修改文件所属权限</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（11）-copyFromLocal：从本地文件系统中拷贝文件到hdfs路径去"><span class="nav-number">1.2.3.11.</span> <span class="nav-text">（11）-copyFromLocal：从本地文件系统中拷贝文件到hdfs路径去</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（12）-copyToLocal：从hdfs拷贝到本地"><span class="nav-number">1.2.3.12.</span> <span class="nav-text">（12）-copyToLocal：从hdfs拷贝到本地</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（13）-cp-：从hdfs的一个路径拷贝到hdfs的另一个路径"><span class="nav-number">1.2.3.13.</span> <span class="nav-text">（13）-cp ：从hdfs的一个路径拷贝到hdfs的另一个路径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（14）-mv：在hdfs目录中移动文件"><span class="nav-number">1.2.3.14.</span> <span class="nav-text">（14）-mv：在hdfs目录中移动文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（15）-get：等同于copyToLocal，就是从hdfs下载文件到本地"><span class="nav-number">1.2.3.15.</span> <span class="nav-text">（15）-get：等同于copyToLocal，就是从hdfs下载文件到本地</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（16）-getmerge-：合并下载多个文件，比如hdfs的目录-aaa-下有多个文件-log-1-log-2-log-3-…"><span class="nav-number">1.2.3.16.</span> <span class="nav-text">（16）-getmerge  ：合并下载多个文件，比如hdfs的目录 /aaa/下有多个文件:log.1, log.2,log.3,…</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（17）-put：等同于copyFromLocal"><span class="nav-number">1.2.3.17.</span> <span class="nav-text">（17）-put：等同于copyFromLocal</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（18）-rm：删除文件或文件夹"><span class="nav-number">1.2.3.18.</span> <span class="nav-text">（18）-rm：删除文件或文件夹</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（19）-rmdir：删除空目录"><span class="nav-number">1.2.3.19.</span> <span class="nav-text">（19）-rmdir：删除空目录</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（20）-df-：统计文件系统的可用空间信息"><span class="nav-number">1.2.3.20.</span> <span class="nav-text">（20）-df ：统计文件系统的可用空间信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（21）-du统计文件夹的大小信息"><span class="nav-number">1.2.3.21.</span> <span class="nav-text">（21）-du统计文件夹的大小信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（22）-count：统计一个指定目录下的文件节点数量"><span class="nav-number">1.2.3.22.</span> <span class="nav-text">（22）-count：统计一个指定目录下的文件节点数量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（23）-setrep：设置hdfs中文件的副本数量"><span class="nav-number">1.2.3.23.</span> <span class="nav-text">（23）-setrep：设置hdfs中文件的副本数量</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">云端笑猿</span>
+
+  
+</div>
+
+
+  <div class="powered-by">
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_uv"></span>
+  </span>
+  </div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共18.2k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

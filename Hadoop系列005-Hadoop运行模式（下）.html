@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hadoop,框架,运行模式,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="云端笑猿" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="本人微信公众号，欢迎扫码关注！   Hadoop运行模式（下）2.3、完全分布式部署Hadoop 1）分析： 1）准备3台客户机（关闭防火墙、静态ip、主机名称） 2）安装jdk 3）配置环境变量 4）安装hadoop 5）配置环境变量 6）安装ssh 7）配置集群 8）启动测试集群   2）操作  （1） 虚拟机准备  克隆三台干净的虚拟机   （2） 主机名设置  （3） scp  1）sc">
+<meta name="keywords" content="Hadoop,框架,运行模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop系列005-Hadoop运行模式（下）">
+<meta property="og:url" content="http://yoursite.com/Hadoop系列005-Hadoop运行模式（下）.html">
+<meta property="og:site_name" content="云端笑猿">
+<meta property="og:description" content="本人微信公众号，欢迎扫码关注！   Hadoop运行模式（下）2.3、完全分布式部署Hadoop 1）分析： 1）准备3台客户机（关闭防火墙、静态ip、主机名称） 2）安装jdk 3）配置环境变量 4）安装hadoop 5）配置环境变量 6）安装ssh 7）配置集群 8）启动测试集群   2）操作  （1） 虚拟机准备  克隆三台干净的虚拟机   （2） 主机名设置  （3） scp  1）sc">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://images.intflag.com/introduce2.jpg">
+<meta property="og:updated_time" content="2018-11-22T07:21:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop系列005-Hadoop运行模式（下）">
+<meta name="twitter:description" content="本人微信公众号，欢迎扫码关注！   Hadoop运行模式（下）2.3、完全分布式部署Hadoop 1）分析： 1）准备3台客户机（关闭防火墙、静态ip、主机名称） 2）安装jdk 3）配置环境变量 4）安装hadoop 5）配置环境变量 6）安装ssh 7）配置集群 8）启动测试集群   2）操作  （1） 虚拟机准备  克隆三台干净的虚拟机   （2） 主机名设置  （3） scp  1）sc">
+<meta name="twitter:image" content="http://images.intflag.com/introduce2.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/Hadoop系列005-Hadoop运行模式（下）.html">
+
+
+
+
+
+  <title>Hadoop系列005-Hadoop运行模式（下） | 云端笑猿</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笑猿</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">现实中的那些纷纷扰扰，都无非是过眼云烟；你在人生的战场上追名逐利，不得解脱；我在我的代码世界中，宁静致远，深藏功与名。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Hadoop系列005-Hadoop运行模式（下）.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="云端笑猿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笑猿">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hadoop系列005-Hadoop运行模式（下）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-22T15:21:15+08:00">
+                2018-11-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-11-22T15:21:15+08:00">
+                2018-11-22
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本人微信公众号，欢迎扫码关注！</p>
+</blockquote>
+<p><img src="http://images.intflag.com/introduce2.jpg" alt=""></p>
+<h2 id="Hadoop运行模式（下）"><a href="#Hadoop运行模式（下）" class="headerlink" title="Hadoop运行模式（下）"></a>Hadoop运行模式（下）</h2><h5 id="2-3、完全分布式部署Hadoop"><a href="#2-3、完全分布式部署Hadoop" class="headerlink" title="2.3、完全分布式部署Hadoop"></a>2.3、完全分布式部署Hadoop</h5><ul>
+<li>1）分析：<ul>
+<li>1）准备3台客户机（关闭防火墙、静态ip、主机名称）</li>
+<li>2）安装jdk</li>
+<li>3）配置环境变量</li>
+<li>4）安装hadoop</li>
+<li>5）配置环境变量</li>
+<li>6）安装ssh</li>
+<li>7）配置集群</li>
+<li>8）启动测试集群</li>
+</ul>
+</li>
+<li><p>2）操作</p>
+<ul>
+<li><p>（1） 虚拟机准备</p>
+<ul>
+<li>克隆三台干净的虚拟机</li>
+</ul>
+</li>
+<li><p>（2） 主机名设置</p>
+</li>
+<li><p>（3） scp</p>
+<ul>
+<li><p>1）scp可以实现服务器与服务器之间的数据拷贝。</p>
+</li>
+<li><p>2）案例实操</p>
+<ul>
+<li><p>（1）将hadoop101中/opt/module和/opt/software文件拷贝到hadoop102、hadoop103和hadoop104上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop101 /]# scp -r /opt/module/  root@hadoop102:/opt</span><br><span class="line">[root@hadoop101 /]# scp -r /opt/software/  root@hadoop102:/opt</span><br><span class="line">[root@hadoop101 /]# scp -r /opt/module/  root@hadoop103:/opt</span><br><span class="line">[root@hadoop101 /]# scp -r /opt/software/  root@hadoop103:/opt</span><br><span class="line">[root@hadoop101 /]# scp -r /opt/module/  root@hadoop104:/opt</span><br><span class="line">[root@hadoop101 /]# scp -r /opt/software/  root@hadoop105:/opt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（2）将192.168.1.102服务器上的文件拷贝到当前用户下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop101 opt]# scp  root@hadoop102:/etc/profile  /opt/tmp/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（3）实现两台远程机器之间的文件传输（hadoop103主机文件拷贝到hadoop104主机上）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[atguigu@hadoop102 test]$ scp atguigu@hadoop103:/opt/test/haha atguigu@hadoop104:/opt/test/</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>（4）SSH无密码登录</p>
+<ul>
+<li><p>1）配置ssh</p>
+<ul>
+<li><p>（1）基本语法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh 另一台电脑的ip地址</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（2）ssh连接时出现Host key verification failed的解决方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">问题再现</span><br><span class="line">[root@hadoop2 opt]# ssh 192.168.1.103</span><br><span class="line">The authenticity of host &apos;192.168.1.103 (192.168.1.103)&apos; can&apos;t be established.</span><br><span class="line">RSA key fingerprint is cf:1e:de:d7:d0:4c:2d:98:60:b4:fd:ae:b1:2d:ad:06.</span><br><span class="line">Are you sure you want to continue connecting (yes/no)? </span><br><span class="line">Host key verification failed.</span><br><span class="line"></span><br><span class="line">解决办法</span><br><span class="line">输入yes，然后输入目标机器的密码即可</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>2）无密钥配置</p>
+<ul>
+<li><p>（1）进入到我的home目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd  ~/.ssh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（2）生成公钥和私钥：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa </span><br><span class="line">然后敲（三个回车），就会生成两个文件id_rsa（私钥）、id_rsa.pub（公钥）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（3）将公钥拷贝到要免密登录的目标机器上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id 目标机器主机名或IP地址</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>3）.ssh文件夹下的文件功能解释</p>
+<ul>
+<li>（1）~/.ssh/known_hosts    ：记录ssh访问过计算机的公钥(public key)</li>
+<li>（2）id_rsa    ：生成的私钥</li>
+<li>（3）id_rsa.pub    ：生成的公钥</li>
+<li>（4）authorized_keys    ：存放授权过得无秘登录服务器公钥</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>（5）rsync</p>
+<p>rsync远程同步工具，主要用于备份和镜像。具有速度快、避免复制相同内容和支持符号链接的优点。</p>
+<ul>
+<li><p>1）查看rsync使用说明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">man rsync | more</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2）基本语法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rsync  -rvl                 $pdir/$fname                       $user@hadoop$host:$pdir</span><br><span class="line">命令   命令参数   要拷贝的文件路径/名称   目的用户@主机:目的路径</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3）案例实操</p>
+<p>把本机/opt/tmp目录同步到hadoop103服务器的root用户下的/opt/tmp目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync –rvl /opt/tmp/*  root@hadoop103:/op	t/tmp</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>（6）编写集群分发脚本xsync</p>
+<ul>
+<li><p>1）需求分析：循环复制文件到所有节点的相同目录下。</p>
+<ul>
+<li><p>（1）原始拷贝：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync  –rvl     /opt/module  root@hadoop103:/opt/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（2）期望脚本：</p>
+<p>xsync 要同步的文件名称</p>
+</li>
+<li><p>（3）在/usr/local/bin这个目录下存放的脚本，可以在系统任何地方直接执行，需要制定路径。</p>
+</li>
+</ul>
+</li>
+<li><p>2）案例实操：</p>
+<ul>
+<li><p>（1）在/usr/local/bin目录下创建xsync文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">#1 获取输入参数个数，如果没有参数，直接退出</span><br><span class="line">pcount=$#</span><br><span class="line">if((pcount==0)); then</span><br><span class="line">echo no args;</span><br><span class="line">exit;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">#2 获取文件名称</span><br><span class="line">p1=$1</span><br><span class="line">fname=`basename $p1`</span><br><span class="line">echo fname=$fname</span><br><span class="line"></span><br><span class="line">#3 获取上级目录到绝对路径</span><br><span class="line">pdir=`cd -P $(dirname $p1); pwd`</span><br><span class="line">echo pdir=$pdir</span><br><span class="line"></span><br><span class="line">#4 获取当前用户名称</span><br><span class="line">user=`whoami`</span><br><span class="line"></span><br><span class="line">#5 循环</span><br><span class="line">for((host=103; host&lt;105; host++)); do</span><br><span class="line">        #echo $pdir/$fname $user@hadoop$host:$pdir</span><br><span class="line">        echo --------------- hadoop$host ----------------</span><br><span class="line">        rsync -rvl $pdir/$fname $user@hadoop$host:$pdir</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（2）修改脚本 xsync 具有执行权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop102 bin]# chmod 777 xsync</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（3）调用脚本形式：xsync 文件名称</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>（7）编写分发脚本xcall</p>
+<ul>
+<li><p>1）需求分析：在所有主机上同时执行相同的命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcall +命令</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2）具体实现</p>
+<ul>
+<li><p>（1）在/usr/local/bin目录下创建xcall文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">pcount=$#</span><br><span class="line">if((pcount==0));then</span><br><span class="line">        echo no args;</span><br><span class="line">        exit;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo -------------localhost----------</span><br><span class="line">$@</span><br><span class="line">for((host=101; host&lt;=108; host++)); do</span><br><span class="line">        echo ----------hadoop$host---------</span><br><span class="line">        ssh hadoop$host $@</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（2）修改脚本 xcall 具有执行权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop102 bin]# chmod 777 xcall</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（3）调用脚本形式： xcall 操作命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop102 ~]# xcall rm -rf /opt/tmp/profile</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>（8） 基于伪分布式部署集群</p>
+<ul>
+<li><p>1）集群部署规划</p>
+<p><strong>规划原则：尽量将耗内存的任务分散开来</strong></p>
+<p>|          | Hadoop102   | Hadoop103       | Hadoop104         |<br>| ——– | ———– | ————— | —————– |<br>| <strong>HDFS</strong> | NameNode    |                 | SecondaryNameNode |<br>|          | DataNode    | DataNode        | DataNode          |<br>| <strong>YARN</strong> |             | ResourceManager |                   |<br>|          | NodeManager | NodeManager     | NodeManager       |</p>
+</li>
+<li><p>2）配置文件</p>
+<ul>
+<li><p>（1）core-site.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 指定HDFS中NameNode的地址 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;hdfs://hadoop102:8020&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 指定hadoop运行时产生文件的存储目录 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;/opt/module/hadoop-2.7.2/data/tmp&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（2）Hdfs</p>
+<ul>
+<li><p>hadoop-env.sh</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/opt/module/jdk1.7.0_79</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>hdfs-site.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;	</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">    	&lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">    	&lt;value&gt;3&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line"></span><br><span class="line">    &lt;property&gt;</span><br><span class="line">    	&lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;</span><br><span class="line">    	&lt;value&gt;hadoop104:50090&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>slaves</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hadoop102</span><br><span class="line">hadoop103</span><br><span class="line">hadoop104</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>（3）yarn</p>
+<ul>
+<li><p>yarn-env.sh</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/opt/module/jdk1.7.0_79</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>yarn-site.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;!-- Site specific YARN configuration properties --&gt;</span><br><span class="line">    &lt;!-- reducer获取数据的方式 --&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">    	&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line">    	&lt;value&gt;mapreduce_shuffle&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 指定YARN的ResourceManager的地址 --&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">    	&lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line">    	&lt;value&gt;hadoop103&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>（4）mapreduce</p>
+<ul>
+<li><p>mapred-env.sh</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/opt/module/jdk1.7.0_79</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>mapred-site.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;!-- 指定mr运行在yarn上 --&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;yarn&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>3）在集群上分发以上所有文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/hadoop-2.7.2/etc/hadoop</span><br><span class="line">xsync /opt/module/hadoop-2.7.2/etc/hadoop/core-site.xml</span><br><span class="line">xsync /opt/module/hadoop-2.7.2/etc/hadoop/yarn-site.xml</span><br><span class="line">xsync /opt/module/hadoop-2.7.2/etc/hadoop/slaves</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>4）查看文件分发情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcall cat /opt/module/hadoop-2.7.2/etc/hadoop/slaves</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>（9）集群启动及测试</p>
+<ul>
+<li><p>1）启动集群</p>
+<ul>
+<li><p>（0）如果集群是第一次启动，需要格式化namenode</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop2 hadoop-2.7.2]# bin/hdfs namenode –format</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（1）启动HDFS</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[intflag@hadoop102 hadoop-2.7.2]$ sbin/start-dfs.sh</span><br><span class="line"></span><br><span class="line">启动之后验证</span><br><span class="line">[intflag@hadoop102 hadoop-2.7.2]$ jps</span><br><span class="line">3690 DataNode</span><br><span class="line">9550 Jps</span><br><span class="line">3583 NameNode</span><br><span class="line"></span><br><span class="line">[intflag@hadoop103 hadoop-2.7.2]$ jps</span><br><span class="line">9095 Jps</span><br><span class="line">3435 DataNode</span><br><span class="line"></span><br><span class="line">[intflag@hadoop104 hadoop-2.7.2]$ jps</span><br><span class="line">3432 DataNode</span><br><span class="line">9371 Jps</span><br><span class="line">3518 SecondaryNameNode</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（2）启动yarn</p>
+<p><strong>注意：Namenode和ResourceManger如果不是同一台机器，不能在NameNode上启动 yarn，应该在ResouceManager所在的机器上启动yarn。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/start-yarn.sh</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>2）集群基本测试</p>
+<ul>
+<li><p>（1）上传文件到集群</p>
+<ul>
+<li><p>上传小文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs dfs –mkdir –p /user/atguigu/tmp/conf</span><br><span class="line">bin/hdfs dfs –put etc/hadoop/*-site.xml /user/atguigu/tmp/conf</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上传大文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[atguigu@hadoop102 hadoop-2.7.2]$ bin/hadoop fs -put /opt/software/hadoop-2.7.2.tar.gz  /user/atguigu/input</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>（2）上传文件后查看文件存放在什么位置</p>
+<ul>
+<li><p>文件存储路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[atguigu@hadoop103 subdir0]$ pwd</span><br><span class="line">/opt/module/hadoop-2.7.2/data/tmp/dfs/data/current/BP-938951106-192.168.10.107-1495462844069/current/finalized/subdir0/subdir0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看文件内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[atguigu@hadoop108 subdir0]$ cat blk_1073741825</span><br><span class="line">hadoop</span><br><span class="line">atguigu</span><br><span class="line">atguigu</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>（3）拼接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-rw-rw-r--. 1 atguigu atguigu 134217728 5月  23 16:01 blk_1073741836</span><br><span class="line">-rw-rw-r--. 1 atguigu atguigu   1048583 5月  23 16:01 blk_1073741836_1012.meta</span><br><span class="line">-rw-rw-r--. 1 atguigu atguigu  63439959 5月  23 16:01 blk_1073741837</span><br><span class="line">-rw-rw-r--. 1 atguigu atguigu    495635 5月  23 16:01 blk_1073741837_1013.meta</span><br><span class="line">[atguigu@hadoop107 subdir0]$ cat blk_1073741836&gt;&gt;tmp.file</span><br><span class="line">[atguigu@hadoop107 subdir0]$ cat blk_1073741837&gt;&gt;tmp.file</span><br><span class="line">[atguigu@hadoop107 subdir0]$ tar -zxvf tmp.file</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（4）下载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[atguigu@hadoop107 hadoop-2.7.2]$ bin/hadoop fs -get /user/atguigu/input/hadoop-2.7.2.tar.gz</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>3）集群性能测试</p>
+<ul>
+<li>写海量数据</li>
+<li>读海量数据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>（9）Hadoop启动停止方式</p>
+<ul>
+<li><p>1）各个服务组件逐一启动</p>
+<ul>
+<li><p>（1）分别启动hdfs组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop-daemon.sh  start|stop  namenode|datanode|secondarynamenode</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（2）启动yarn</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn-daemon.sh  start|stop  resourcemanager|nodemanager</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>2）各个模块分开启动（配置ssh是前提）常用</p>
+<ul>
+<li><p>（1）整体启动/停止hdfs</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">start-dfs.sh</span><br><span class="line">stop-dfs.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（2）整体启动/停止yarn</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">start-yarn.sh</span><br><span class="line">stop-yarn.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3）全部启动（不建议使用）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">start-all.sh</span><br><span class="line">stop-all.sh</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>（11）配置集群常见问题</p>
+<ul>
+<li><p>1）防火墙没关闭、或者没有启动yarn</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INFO client.RMProxy: Connecting to ResourceManager at hadoop108/192.168.10.108:8032</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2）主机名称配置错误</p>
+</li>
+<li><p>3）ip地址配置错误</p>
+</li>
+<li><p>4）ssh没有配置好</p>
+</li>
+<li><p>5）root用户和atguigu两个用户启动集群不统一</p>
+</li>
+<li><p>6）配置文件修改不细心</p>
+</li>
+<li><p>7）未编译源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">17/05/22 15:38:58 INFO client.RMProxy: Connecting to ResourceManager at hadoop108/192.168.10.108:8032</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>8）datanode不被namenode识别问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Namenode在format初始化的时候会形成两个标识，blockPoolId和clusterId。新的datanode加入时，会获取这两个标识作为自己工作目录中的标识。</span><br><span class="line"></span><br><span class="line">一旦namenode重新format后，namenode的身份标识已变，而datanode如果依然持有原来的id，就不会被namenode识别。</span><br><span class="line"></span><br><span class="line">解决办法，删除datanode节点中的数据后，再次重新格式化namenode。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag"><i class="fa fa-tag"></i> Hadoop</a>
+          
+            <a href="/tags/框架/" rel="tag"><i class="fa fa-tag"></i> 框架</a>
+          
+            <a href="/tags/运行模式/" rel="tag"><i class="fa fa-tag"></i> 运行模式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Hadoop系列004-Hadoop运行模式（上）.html" rel="next" title="Hadoop系列004-Hadoop运行模式（上）">
+                <i class="fa fa-chevron-left"></i> Hadoop系列004-Hadoop运行模式（上）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Hadoop系列006-HDFS概念及命令行操作.html" rel="prev" title="Hadoop系列006-HDFS概念及命令行操作">
+                Hadoop系列006-HDFS概念及命令行操作 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="云端笑猿">
+            
+              <p class="site-author-name" itemprop="name">云端笑猿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://me.csdn.net/intflag" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-compass"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/44e9b3d6ab4a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/intflag/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-crop"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/intflag/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-binoculars"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5bdacfdc6fb9a022852a762d" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-spinner"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop运行模式（下）"><span class="nav-number">1.</span> <span class="nav-text">Hadoop运行模式（下）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3、完全分布式部署Hadoop"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">2.3、完全分布式部署Hadoop</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">云端笑猿</span>
+
+  
+</div>
+
+
+  <div class="powered-by">
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_uv"></span>
+  </span>
+  </div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共18.2k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
