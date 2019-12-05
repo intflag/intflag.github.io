@@ -89,12 +89,12 @@
 <meta property="og:site_name" content="云端笑猿">
 <meta property="og:description" content="本人微信公众号，欢迎扫码关注！   Hadoop运行模式（下）2.3、完全分布式部署Hadoop 1）分析： 1）准备3台客户机（关闭防火墙、静态ip、主机名称） 2）安装jdk 3）配置环境变量 4）安装hadoop 5）配置环境变量 6）安装ssh 7）配置集群 8）启动测试集群   2）操作  （1） 虚拟机准备  克隆三台干净的虚拟机   （2） 主机名设置  （3） scp  1）sc">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://images.intflag.com/introduce2.jpg">
+<meta property="og:image" content="http://images.intflag.com/bigdata002.jpg">
 <meta property="og:updated_time" content="2018-11-22T07:21:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop系列005-Hadoop运行模式（下）">
 <meta name="twitter:description" content="本人微信公众号，欢迎扫码关注！   Hadoop运行模式（下）2.3、完全分布式部署Hadoop 1）分析： 1）准备3台客户机（关闭防火墙、静态ip、主机名称） 2）安装jdk 3）配置环境变量 4）安装hadoop 5）配置环境变量 6）安装ssh 7）配置集群 8）启动测试集群   2）操作  （1） 虚拟机准备  克隆三台干净的虚拟机   （2） 主机名设置  （3） scp  1）sc">
-<meta name="twitter:image" content="http://images.intflag.com/introduce2.jpg">
+<meta name="twitter:image" content="http://images.intflag.com/bigdata002.jpg">
 
 
 
@@ -342,7 +342,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.2k
+                  2.1k
                 </span>
               
 
@@ -382,7 +382,7 @@
         <blockquote>
 <p>本人微信公众号，欢迎扫码关注！</p>
 </blockquote>
-<p><img src="http://images.intflag.com/introduce2.jpg" alt=""></p>
+<p><img src="http://images.intflag.com/bigdata002.jpg" alt=""></p>
 <h2 id="Hadoop运行模式（下）"><a href="#Hadoop运行模式（下）" class="headerlink" title="Hadoop运行模式（下）"></a>Hadoop运行模式（下）</h2><h5 id="2-3、完全分布式部署Hadoop"><a href="#2-3、完全分布式部署Hadoop" class="headerlink" title="2.3、完全分布式部署Hadoop"></a>2.3、完全分布式部署Hadoop</h5><ul>
 <li>1）分析：<ul>
 <li>1）准备3台客户机（关闭防火墙、静态ip、主机名称）</li>
@@ -538,7 +538,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/opt/module/jdk1.7.0_79</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>hdfs-site.xml</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;	</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">    	&lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">    	&lt;value&gt;3&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line"></span><br><span class="line">    &lt;property&gt;</span><br><span class="line">    	&lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;</span><br><span class="line">    	&lt;value&gt;hadoop104:50090&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;3&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">          </span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;hadoop104:50090&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>slaves</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hadoop102</span><br><span class="line">hadoop103</span><br><span class="line">hadoop104</span><br></pre></td></tr></table></figure>
@@ -551,7 +551,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/opt/module/jdk1.7.0_79</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>yarn-site.xml</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;!-- Site specific YARN configuration properties --&gt;</span><br><span class="line">    &lt;!-- reducer获取数据的方式 --&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">    	&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line">    	&lt;value&gt;mapreduce_shuffle&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 指定YARN的ResourceManager的地址 --&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">    	&lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line">    	&lt;value&gt;hadoop103&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Site specific YARN configuration properties --&gt;</span><br><span class="line">&lt;!-- reducer获取数据的方式 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;mapreduce_shuffle&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">          </span><br><span class="line">&lt;!-- 指定YARN的ResourceManager的地址 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;hadoop103&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -561,14 +561,14 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/opt/module/jdk1.7.0_79</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>mapred-site.xml</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;!-- 指定mr运行在yarn上 --&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;yarn&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 指定mr运行在yarn上 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;yarn&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 </ul>
 </li>
 <li><p>3）在集群上分发以上所有文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/hadoop-2.7.2/etc/hadoop</span><br><span class="line">xsync /opt/module/hadoop-2.7.2/etc/hadoop/core-site.xml</span><br><span class="line">xsync /opt/module/hadoop-2.7.2/etc/hadoop/yarn-site.xml</span><br><span class="line">xsync /opt/module/hadoop-2.7.2/etc/hadoop/slaves</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/hadoop-2.7.2/etc</span><br><span class="line">xsync hadoop/</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>4）查看文件分发情况</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcall cat /opt/module/hadoop-2.7.2/etc/hadoop/slaves</span><br></pre></td></tr></table></figure>
@@ -817,7 +817,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -828,7 +828,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -839,7 +839,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
@@ -970,7 +970,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共20k字</span>
+  <span class="post-count">博客全站共21.8k字</span>
 </div>
         
 

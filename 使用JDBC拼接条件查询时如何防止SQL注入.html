@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="jdbc,条件查询,sql注入,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="云端笑猿" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="本人微信公众号，欢迎扫码关注！   使用jdbc拼接条件查询语句时如何防止sql注入 最近公司的项目在上线时需要进行安全扫描，但是有几个项目中含有部分老代码，操作数据库时使用的是jdbc，并且竟然好多都是拼接的SQL语句，真是令人抓狂。 在具体改造时，必须使用PreparedStatement来防止SQL注入，普通SQL语句比较容易改造，本重点探讨在拼接查询条件的时候如何方式SQL注入，具体思路">
+<meta name="keywords" content="jdbc,条件查询,sql注入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用jdbc拼接条件查询语句时如何防止sql注入">
+<meta property="og:url" content="http://yoursite.com/使用JDBC拼接条件查询时如何防止SQL注入.html">
+<meta property="og:site_name" content="云端笑猿">
+<meta property="og:description" content="本人微信公众号，欢迎扫码关注！   使用jdbc拼接条件查询语句时如何防止sql注入 最近公司的项目在上线时需要进行安全扫描，但是有几个项目中含有部分老代码，操作数据库时使用的是jdbc，并且竟然好多都是拼接的SQL语句，真是令人抓狂。 在具体改造时，必须使用PreparedStatement来防止SQL注入，普通SQL语句比较容易改造，本重点探讨在拼接查询条件的时候如何方式SQL注入，具体思路">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://images.intflag.com/bigdata002.jpg">
+<meta property="og:image" content="http://images.intflag.com/%E4%BD%BF%E7%94%A8JDBC%E6%8B%BC%E6%8E%A5%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2%E6%97%B6%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2SQL%E6%B3%A8%E5%85%A5001.png">
+<meta property="og:updated_time" content="2019-04-22T11:16:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用jdbc拼接条件查询语句时如何防止sql注入">
+<meta name="twitter:description" content="本人微信公众号，欢迎扫码关注！   使用jdbc拼接条件查询语句时如何防止sql注入 最近公司的项目在上线时需要进行安全扫描，但是有几个项目中含有部分老代码，操作数据库时使用的是jdbc，并且竟然好多都是拼接的SQL语句，真是令人抓狂。 在具体改造时，必须使用PreparedStatement来防止SQL注入，普通SQL语句比较容易改造，本重点探讨在拼接查询条件的时候如何方式SQL注入，具体思路">
+<meta name="twitter:image" content="http://images.intflag.com/bigdata002.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/使用JDBC拼接条件查询时如何防止SQL注入.html">
+
+
+
+
+
+  <title>使用jdbc拼接条件查询语句时如何防止sql注入 | 云端笑猿</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笑猿</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">现实中的那些纷纷扰扰，都无非是过眼云烟；你在人生的战场上追名逐利，不得解脱；我在我的代码世界中，宁静致远，深藏功与名。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/使用JDBC拼接条件查询时如何防止SQL注入.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="云端笑猿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笑猿">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用jdbc拼接条件查询语句时如何防止sql注入</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T19:16:09+08:00">
+                2019-04-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-04-22T19:16:09+08:00">
+                2019-04-22
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/问题排查/" itemprop="url" rel="index">
+                    <span itemprop="name">问题排查</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  884
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本人微信公众号，欢迎扫码关注！</p>
+</blockquote>
+<p><img src="http://images.intflag.com/bigdata002.jpg" alt=""></p>
+<h2 id="使用jdbc拼接条件查询语句时如何防止sql注入"><a href="#使用jdbc拼接条件查询语句时如何防止sql注入" class="headerlink" title="使用jdbc拼接条件查询语句时如何防止sql注入"></a>使用jdbc拼接条件查询语句时如何防止sql注入</h2><ul>
+<li>最近公司的项目在上线时需要进行安全扫描，但是有几个项目中含有部分老代码，操作数据库时使用的是jdbc，并且竟然好多都是拼接的SQL语句，真是令人抓狂。</li>
+<li>在具体改造时，必须使用PreparedStatement来防止SQL注入，普通SQL语句比较容易改造，本重点探讨在拼接查询条件的时候如何方式SQL注入，具体思路请参考下面的示例代码。<h3 id="1-数据库示例数据"><a href="#1-数据库示例数据" class="headerlink" title="1 数据库示例数据"></a>1 数据库示例数据</h3><img src="http://images.intflag.com/%E4%BD%BF%E7%94%A8JDBC%E6%8B%BC%E6%8E%A5%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2%E6%97%B6%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2SQL%E6%B3%A8%E5%85%A5001.png" alt=""><h3 id="2-使用statement（不防止SQL注入）"><a href="#2-使用statement（不防止SQL注入）" class="headerlink" title="2 使用statement（不防止SQL注入）"></a>2 使用statement（不防止SQL注入）</h3><h4 id="2-1-示例代码"><a href="#2-1-示例代码" class="headerlink" title="2.1 示例代码"></a>2.1 示例代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void statementTest() &#123;</span><br><span class="line">    String username = &quot;tom&quot;;</span><br><span class="line">    String sex = &quot;1&quot;;</span><br><span class="line">    String address = &quot;&apos; or &apos;1&apos;=&apos;1&quot;;</span><br><span class="line">    Statement stat = null;</span><br><span class="line">    ResultSet res = null;</span><br><span class="line"></span><br><span class="line">    Connection conn = ConnectionFactory.getConnection();</span><br><span class="line">    String sql = &quot;SELECT * FROM user WHERE 1 = 1&quot;;</span><br><span class="line"></span><br><span class="line">    sql += username == null ? &quot;&quot; : &quot; AND username = &apos;&quot; + username + &quot;&apos;&quot;;</span><br><span class="line">    sql += sex == null ? &quot;&quot; : &quot; AND sex = &apos;&quot; + sex + &quot;&apos;&quot;;</span><br><span class="line">    sql += address == null ? &quot;&quot; : &quot; AND address = &apos;&quot; + address + &quot;&apos;&quot;;</span><br><span class="line"></span><br><span class="line">    System.out.println(sql);</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">        stat = conn.createStatement();</span><br><span class="line">        res = stat.executeQuery(sql);</span><br><span class="line">        printRes(res);</span><br><span class="line">    &#125; catch (SQLException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        ResourceClose.close(res, stat, conn);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="2-2-控制台结果"><a href="#2-2-控制台结果" class="headerlink" title="2.2 控制台结果"></a>2.2 控制台结果</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM user WHERE 1 = 1 AND username = &apos;tom&apos; AND sex = &apos;1&apos; AND address = &apos;&apos; or &apos;1&apos;=&apos;1&apos;</span><br><span class="line">10 tom 2014-07-10 1 beijing </span><br><span class="line">16 tom 2018-07-31 1 shanghai </span><br><span class="line">22 tom 2019-04-16 2 shanghai </span><br><span class="line">24 tom 2019-06-22 1 guangzhou </span><br><span class="line">25 tom 2019-01-22 2 guangzhou </span><br><span class="line">28 tom 2018-07-31 1 shenzhen</span><br></pre></td></tr></table></figure>
+<h4 id="2-3-小结"><a href="#2-3-小结" class="headerlink" title="2.3 小结"></a>2.3 小结</h4><ul>
+<li>经过上面的示例代码我们可以发现，单纯拼接SQL语句是非常危险的，特别容易被SQL注入，但是如果使用prepareStatement的话，像这种条件查询我们预先并不能确定到底有多少个？（占位符），也就不能使用按照？（占位符）索引去设置参数了，那怎么办呢？</li>
+<li>别担心，此时我们使用一个小小的技巧，具体参考下面的示例代码<h3 id="3-使用prepareStatement（可以防止SQL注入）"><a href="#3-使用prepareStatement（可以防止SQL注入）" class="headerlink" title="3 使用prepareStatement（可以防止SQL注入）"></a>3 使用prepareStatement（可以防止SQL注入）</h3><h4 id="3-1-示例代码"><a href="#3-1-示例代码" class="headerlink" title="3.1 示例代码"></a>3.1 示例代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void prepareStatementTest() &#123;</span><br><span class="line">    String username = &quot;tom&quot;;</span><br><span class="line">    String sex = null;</span><br><span class="line">    String address = &quot;&apos; or &apos;1&apos;=&apos;1&quot;;</span><br><span class="line">    PreparedStatement stat = null;</span><br><span class="line">    ResultSet res = null;</span><br><span class="line"></span><br><span class="line">    Connection conn = ConnectionFactory.getConnection();</span><br><span class="line">    String sql = &quot;SELECT * FROM user WHERE 1 = 1&quot;;</span><br><span class="line"></span><br><span class="line">    List&lt;Object&gt; param = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    if (username != null) &#123;</span><br><span class="line">        sql += &quot; AND username = ?&quot;;</span><br><span class="line">        param.add(username);</span><br><span class="line">    &#125;</span><br><span class="line">    if (sex != null) &#123;</span><br><span class="line">        sql += &quot; AND sex = ?&quot;;</span><br><span class="line">        param.add(sex);</span><br><span class="line">    &#125;</span><br><span class="line">    if (address != null) &#123;</span><br><span class="line">        sql += &quot; AND address = ?&quot;;</span><br><span class="line">        param.add(address);</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(sql);</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">        stat = conn.prepareStatement(sql);</span><br><span class="line">        for (int i = 0; i &lt; param.size(); i++) &#123;</span><br><span class="line">            stat.setObject(i+1,param.get(i));</span><br><span class="line">        &#125;</span><br><span class="line">        res = stat.executeQuery();</span><br><span class="line">        printRes(res);</span><br><span class="line">    &#125; catch (SQLException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        ResourceClose.close(res, stat, conn);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="3-2-控制台结果"><a href="#3-2-控制台结果" class="headerlink" title="3.2 控制台结果"></a>3.2 控制台结果</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM user WHERE 1 = 1 AND username = ? AND address = ?</span><br></pre></td></tr></table></figure>
+<h4 id="3-3-小结"><a href="#3-3-小结" class="headerlink" title="3.3 小结"></a>3.3 小结</h4><ul>
+<li>可以看出，使用prepareStatement是可以防止SQL注入的。</li>
+<li>但进行类似条件拼接这种操作时，可以先把参数放入一个集合中，然后遍历集合，同时利用setObject(index,obj)这个方法就可以动态的获取参数的索引了，而且不用关心参数是何种类型。<h3 id="4-问题总结"><a href="#4-问题总结" class="headerlink" title="4 问题总结"></a>4 问题总结</h3></li>
+<li>如今在进行项目开发时已经很少使用原生的jdbc了，大多数都用功能强大的框架去完成，他们帮我们简化了很多操作，如获取数据库连接、封装结果集、SQL预编译（可以防止SQL注入）</li>
+<li>如果实在避免不了使用的话一定要使用可以需编译的prepareStatement对象，避免被SQL注入带来的风险。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/jdbc/" rel="tag"><i class="fa fa-tag"></i> jdbc</a>
+          
+            <a href="/tags/条件查询/" rel="tag"><i class="fa fa-tag"></i> 条件查询</a>
+          
+            <a href="/tags/sql注入/" rel="tag"><i class="fa fa-tag"></i> sql注入</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Hadoop系列009-NameNode工作机制.html" rel="next" title="Hadoop系列009-NameNode工作机制">
+                <i class="fa fa-chevron-left"></i> Hadoop系列009-NameNode工作机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Java设计模式01-策略模式.html" rel="prev" title="Java设计模式01-策略模式">
+                Java设计模式01-策略模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="云端笑猿">
+            
+              <p class="site-author-name" itemprop="name">云端笑猿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://me.csdn.net/intflag" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-compass"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/44e9b3d6ab4a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/intflag/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-crop"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/intflag/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-binoculars"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5bdacfdc6fb9a022852a762d" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-spinner"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用jdbc拼接条件查询语句时如何防止sql注入"><span class="nav-number">1.</span> <span class="nav-text">使用jdbc拼接条件查询语句时如何防止sql注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-数据库示例数据"><span class="nav-number">1.1.</span> <span class="nav-text">1 数据库示例数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-使用statement（不防止SQL注入）"><span class="nav-number">1.2.</span> <span class="nav-text">2 使用statement（不防止SQL注入）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-示例代码"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 示例代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-控制台结果"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 控制台结果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-小结"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-使用prepareStatement（可以防止SQL注入）"><span class="nav-number">1.3.</span> <span class="nav-text">3 使用prepareStatement（可以防止SQL注入）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-示例代码"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 示例代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-控制台结果"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 控制台结果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-小结"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-问题总结"><span class="nav-number">1.4.</span> <span class="nav-text">4 问题总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">云端笑猿</span>
+
+  
+</div>
+
+
+  <div class="powered-by">
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_uv"></span>
+  </span>
+  </div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共21.8k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
