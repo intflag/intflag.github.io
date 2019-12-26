@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-12-26T07:17:26.608Z</updated>
+  <updated>2019-12-26T09:34:36.500Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,13 +17,13 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Docker系列001-Docker入门</title>
-    <link href="http://yoursite.com/Docker%E7%B3%BB%E5%88%97001-Docker%E5%85%A5%E9%97%A8.html"/>
-    <id>http://yoursite.com/Docker系列001-Docker入门.html</id>
-    <published>2019-12-26T07:15:45.618Z</published>
-    <updated>2019-12-26T07:17:26.608Z</updated>
+    <title>Docker系列003-在Docker中安装Centos镜像</title>
+    <link href="http://yoursite.com/Docker%E7%B3%BB%E5%88%97003-%E5%9C%A8Docker%E4%B8%AD%E5%AE%89%E8%A3%85Centos%E9%95%9C%E5%83%8F.html"/>
+    <id>http://yoursite.com/Docker系列003-在Docker中安装Centos镜像.html</id>
+    <published>2019-12-26T08:22:05.739Z</published>
+    <updated>2019-12-26T09:34:36.500Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>本人微信公众号，欢迎扫码关注！</p></blockquote><p><img src="http://images.intflag.com/bigdata002.jpg" alt=""></p><h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>本人微信公众号，欢迎扫码关注！</p></blockquote><p><img src="http://images.intflag.com/bigdata002.jpg" alt=""></p><h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><ul><li>centos 7</li><li>已安装Docker</li></ul><h3 id="Centos镜像下载安装"><a href="#Centos镜像下载安装" class="headerlink" title="Centos镜像下载安装"></a>Centos镜像下载安装</h3><p>步骤<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 从镜像仓库拉取centos镜像</span><br><span class="line">docker pull docker.io/centos</span><br><span class="line"></span><br><span class="line"># 查看本地镜像</span><br><span class="line">docker image ls</span><br></pre></td></tr></table></figure></p><p><img src="http://images.intflag.com/collection02-001.jpg" alt=""></p><h3 id="运行一个centos容器"><a href="#运行一个centos容器" class="headerlink" title="运行一个centos容器"></a>运行一个centos容器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --name centosTest --privileged=true -v /opt/software/:/opt/software/ -p 9908:8080 docker.io/centos /sbin/init</span><br></pre></td></tr></table></figure><p>命令解释</p><ul><li><code>-it</code>：控制台交互，支持终端登录</li><li><code>--name centosTest</code>：对容器命名</li><li><code>--privileged=true</code>：大约在0.6版，privileged被引入docker，使用该参数，container内的root拥有真正的root权限。否则，container内的root只是外部的一个普通用户权限，privileged启动的容器，可以看到很多host上的设备，并且可以执行mount。甚至允许你在docker容器中启动docker容器。</li><li><code>-v /opt/software/:/opt/software/</code>：给容器挂载存储卷，挂载到容器的某个目录，将本地的/opt/software/目录挂载到容器中centos的/opt/software/目录下。</li><li><code>-p 9908:8080</code>：容器端口映射，将容器中的8080端口映射到本地9908端口，注意：使用<code>-p</code>参数进行的端口映射，会自动在iptables中建立规则，绕过firewalld，有些情况下这对于端口级的黑白名单控制管理是很不利的，所以我们需要对iptables进行手动修改，详见<a href="https://www.cnblogs.com/qjfoidnh/p/11567309.html" target="_blank" rel="noopener">https://www.cnblogs.com/qjfoidnh/p/11567309.html</a></li><li><code>docker.io/centos</code>：使用哪个镜像</li><li><code>/sbin/init</code>：初始化</li></ul><p>查看是否启动成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure></p><p><img src="http://images.intflag.com/docker03-001.jpeg" alt=""></p><h3 id="进入某个容器中"><a href="#进入某个容器中" class="headerlink" title="进入某个容器中"></a>进入某个容器中</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it centosTest /bin/bash</span><br></pre></td></tr></table></figure><p>命令执行成功后，命令行会变成如：<code>[root@3583b13c3b3e /]#</code>模式，说明已经成功进入我们启动的容器中了。<br><img src="http://images.intflag.com/docker03-002.jpeg" alt=""></p><h3 id="常用命令执行报错问题"><a href="#常用命令执行报错问题" class="headerlink" title="常用命令执行报错问题"></a>常用命令执行报错问题</h3><ul><li>执行<code>ifconfig</code>命令报错：执行后出现<code>bash: ifconfig: command not found</code>错误提示。<br>使用docker pull centos命令下载下来的centos镜像是centos7的最小安装包，里面并没有携带ifconfig命令，所以我们要知道<code>ifconfig</code>命令在哪个工具包下，然后我们安装该工具包，该命令自然就可以使用了。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 查看命令详细信息</span><br><span class="line">yum provides ifconfig</span><br></pre></td></tr></table></figure></li></ul><p><img src="http://images.intflag.com/docker03-003.jpeg" alt=""></p><p>由上图我们得知，<code>ifconfig</code>命令在<code>net-tools</code>这个工具包下，然后我们使用<code>yum install net-tools</code>命令安卓即可，效果如下图。<br><img src="http://images.intflag.com/docker03-004.jpeg" alt=""></p><ul><li>执行<code>ll</code>命令报错：执行后会出现<code>bash: ll: command not found</code>错误提示。<br>首先我们应该知道，<code>ll</code>是<code>ls -l</code>的简写方式，而错误提示说该命令没找到，其实是因为<code>bashrc</code>文件中没有该命令的配置，所以我们配置上就好了。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 对.bashrc配置文件进行编辑</span><br><span class="line">vi ~/.bashrc</span><br><span class="line"></span><br><span class="line"># 插入我们要的命令脚本</span><br><span class="line">alias ll=&apos;ls -lrt&apos;</span><br><span class="line"></span><br><span class="line"># 保存退出，然后千万别忘了刷新配置，不然没反应</span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure></li></ul><p><img src="http://images.intflag.com/docker03-005.jpeg" alt=""></p><p>其他命令失效的错误，解决思路大多与上面这两种类似，因为使用<code>docker pull centos</code>命令下载下来的centos镜像是centos7的最小安装包，所以部分配置或命令是没有的。</p>]]></content>
     
     <summary type="html">
     
@@ -34,6 +34,66 @@
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&quot;http://images.intflag.com/bigdata002.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;h3 id=&quot;环境准备&quot;&gt;&lt;a href=&quot;
+      
+    
+    </summary>
+    
+      <category term="Docker" scheme="http://yoursite.com/categories/Docker/"/>
+    
+    
+      <category term="Docker" scheme="http://yoursite.com/tags/Docker/"/>
+    
+      <category term="Centos" scheme="http://yoursite.com/tags/Centos/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker系列002-Docker入门</title>
+    <link href="http://yoursite.com/Docker%E7%B3%BB%E5%88%97002-Docker%E5%85%A5%E9%97%A8.html"/>
+    <id>http://yoursite.com/Docker系列002-Docker入门.html</id>
+    <published>2019-12-26T08:10:20.702Z</published>
+    <updated>2019-12-26T09:34:31.369Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>本人微信公众号，欢迎扫码关注！</p></blockquote><p><img src="http://images.intflag.com/bigdata002.jpg" alt=""></p><h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><ul><li>centos 7</li></ul><h3 id="Docker下载安装"><a href="#Docker下载安装" class="headerlink" title="Docker下载安装"></a>Docker下载安装</h3><p>步骤：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1、检查内核版本，必须是3.10及以上</span><br><span class="line">uname -r</span><br><span class="line">2、安装docker</span><br><span class="line">yum install docker</span><br><span class="line">3、输入y确认安装</span><br><span class="line">4、启动docker</span><br><span class="line">[root@localhost ~]# systemctl start docker</span><br><span class="line">[root@localhost ~]# docker -v</span><br><span class="line">Docker version 1.12.6, build 3e8e77d/1.12.6</span><br><span class="line">5、开机启动docker</span><br><span class="line">[root@localhost ~]# systemctl enable docker</span><br><span class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.</span><br><span class="line">6、停止docker</span><br><span class="line">systemctl stop docker</span><br></pre></td></tr></table></figure><h3 id="Docker常用命令及操作"><a href="#Docker常用命令及操作" class="headerlink" title="Docker常用命令及操作"></a>Docker常用命令及操作</h3><h4 id="镜像操作"><a href="#镜像操作" class="headerlink" title="镜像操作"></a>镜像操作</h4><table><thead><tr><th>操作</th><th>命令</th><th>说明</th></tr></thead><tbody><tr><td>检索</td><td>docker  search 关键字  eg：docker  search redis</td><td>我们经常去docker  hub上检索镜像的详细信息，如镜像的TAG。</td></tr><tr><td>拉取</td><td>docker pull 镜像名:tag</td><td>:tag是可选的，tag表示标签，多为软件的版本，默认是latest</td></tr><tr><td>列表</td><td>docker images</td><td>查看所有本地镜像</td></tr><tr><td>删除</td><td>docker rmi image-id</td><td>删除指定的本地镜像</td></tr></tbody></table><p>官方镜像市场：<a href="https://hub.docker.com/" target="_blank" rel="noopener">https://hub.docker.com/</a></p><h4 id="容器操作"><a href="#容器操作" class="headerlink" title="容器操作"></a>容器操作</h4><p>软件镜像（QQ安装程序）—-运行镜像—-产生一个容器（正在运行的软件，运行的QQ）；</p><p>步骤：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">1、搜索镜像</span><br><span class="line">[root@localhost ~]# docker search tomcat</span><br><span class="line">2、拉取镜像</span><br><span class="line">[root@localhost ~]# docker pull tomcat</span><br><span class="line">3、根据镜像启动容器</span><br><span class="line">docker run --name mytomcat -d tomcat:latest</span><br><span class="line">4、docker ps  </span><br><span class="line">查看运行中的容器</span><br><span class="line">5、 停止运行中的容器</span><br><span class="line">docker stop  容器的id</span><br><span class="line">6、查看所有的容器</span><br><span class="line">docker ps -a</span><br><span class="line">7、启动容器</span><br><span class="line">docker start 容器id</span><br><span class="line">8、删除一个容器</span><br><span class="line"> docker rm 容器id</span><br><span class="line">9、启动一个做了端口映射的tomcat</span><br><span class="line">[root@localhost ~]# docker run -d -p 8888:8080 tomcat</span><br><span class="line">-d：后台运行</span><br><span class="line">-p: 将主机的端口映射到容器的一个端口    主机端口:容器内部的端口</span><br><span class="line"></span><br><span class="line">10、为了演示简单关闭了linux的防火墙</span><br><span class="line">service firewalld status ；查看防火墙状态</span><br><span class="line">service firewalld stop：关闭防火墙</span><br><span class="line">11、查看容器的日志</span><br><span class="line">docker logs container-name/container-id</span><br><span class="line"></span><br><span class="line">更多命令参看</span><br><span class="line">https://docs.docker.com/engine/reference/commandline/docker/</span><br><span class="line">可以参考每一个镜像的文档</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;本人微信公众号，欢迎扫码关注！&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;http://images.intflag.com/bigdata002.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;环境准备&quot;&gt;&lt;a href=&quot;
+      
+    
+    </summary>
+    
+      <category term="Docker" scheme="http://yoursite.com/categories/Docker/"/>
+    
+    
+      <category term="Docker" scheme="http://yoursite.com/tags/Docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker系列001-Docker概述</title>
+    <link href="http://yoursite.com/Docker%E7%B3%BB%E5%88%97001-Docker%E6%A6%82%E8%BF%B0.html"/>
+    <id>http://yoursite.com/Docker系列001-Docker概述.html</id>
+    <published>2019-12-26T07:15:45.618Z</published>
+    <updated>2019-12-26T09:34:25.652Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>本人微信公众号，欢迎扫码关注！</p></blockquote><p><img src="http://images.intflag.com/bigdata002.jpg" alt=""></p><h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>Docker是一个开源的容器引擎，在搞清楚它是什么之前，必须先了解什么是<strong>容器</strong>。</p><h3 id="什么是容器"><a href="#什么是容器" class="headerlink" title="什么是容器"></a>什么是容器</h3><p>先看一下官方介绍：</p><blockquote><p>容器就是将软件打包成标准化单元，以用于开发、交付和部署。</p></blockquote><ul><li>容器镜像是轻量的、可执行的独立软件包 ，包含软件运行所需的所有内容：代码、运行时环境、系统工具、系统库和设置。</li><li>容器化软件适用于基于Linux和Windows的应用，在任何环境中都能够始终如一地运行。</li><li>容器赋予了软件独立性，使其免受外在环境差异（例如，开发和预演环境的差异）的影响，从而有助于减少团队间在相同基础设施上运行不同软件时的冲突。</li></ul><p><img src="http://images.intflag.com/docker01-001.png" alt=""></p><h3 id="什么是Docker"><a href="#什么是Docker" class="headerlink" title="什么是Docker"></a>什么是Docker</h3><ul><li>Docker是世界领先的软件容器平台。</li><li>Docker使用Google公司推出的Go语言进行开发实现，基于Linux内核的cgroup，namespace，以及AUFS类的UnionFS等技术，对进程进行封装隔离，属于操作系统层面的虚拟化技术。 由于隔离的进程独立于宿主和其它的隔离的进程，因此也称其为容器。Docke最初实现是基于LXC。</li><li>Docker能够自动执行重复性任务，例如搭建和配置开发环境，从而解放了开发人员以便他们专注在真正重要的事情上：构建杰出的软件。</li><li>用户可以方便地创建和使用容器，把自己的应用放入容器。容器还可以进行版本管理、复制、分享、修改，就像管理普通的代码一样。</li></ul><p><img src="http://images.intflag.com/docker01-002.jpeg" alt=""></p><h3 id="Docker思想"><a href="#Docker思想" class="headerlink" title="Docker思想"></a>Docker思想</h3><ul><li>集装箱</li><li>标准化： ①运输方式、②存储方式、 ③API接口</li><li>隔离</li></ul><h1 id="Docker容器的特点"><a href="#Docker容器的特点" class="headerlink" title="Docker容器的特点"></a>Docker容器的特点</h1><ul><li>轻量，在一台机器上运行的多个Docker容器可以共享这台机器的操作系统内核；它们能够迅速启动，只需占用很少的计算和内存资源。镜像是通过文件系统层进行构造的，并共享一些公共文件。这样就能尽量降低磁盘用量，并能更快地下载镜像。</li><li>标准，Docker容器基于开放式标准，能够在所有主流Linux版本、Microsoft Windows以及包括VM、裸机服务器和云在内的任何基础设施上运行。</li><li>安全，Docker赋予应用的隔离性不仅限于彼此隔离，还独立于底层的基础设施。Docker默认提供最强的隔离，因此应用出现问题，也只是单个容器的问题，而不会波及到整台机器。</li></ul><h3 id="为什么要用Docker"><a href="#为什么要用Docker" class="headerlink" title="为什么要用Docker"></a>为什么要用Docker</h3><ul><li>Docker的镜像提供了除内核外完整的运行时环境，确保了应用运行环境一致性，从而不会再出现“这段代码在我机器上没问题啊”这类问题；——一致的运行环境</li><li>可以做到秒级、甚至毫秒级的启动时间。大大的节约了开发、测试、部署的时间。——更快速的启动时间</li><li>避免公用的服务器，资源会容易受到其他用户的影响。——隔离性</li><li>善于处理集中爆发的服务器使用压力；——弹性伸缩，快速扩展</li><li>可以很轻易的将在一个平台上运行的应用，迁移到另一个平台上，而不用担心运行环境的变化导致应用无法正常运行的情况。——迁移方便</li><li>使用Docker可以通过定制应用镜像来实现持续集成、持续交付、部署。——持续交付和部署</li></ul><h3 id="容器-VS-虚拟机"><a href="#容器-VS-虚拟机" class="headerlink" title="容器 VS 虚拟机"></a>容器 VS 虚拟机</h3><p>每当说起容器，我们不得不将其与虚拟机做一个比较。</p><ul><li>简单来说： 容器和虚拟机具有相似的资源隔离和分配优势，但功能有所不同，因为容器虚拟化的是操作系统，而不是硬件，因此容器更容易移植，效率也更高。</li><li>两者对比图</li></ul><p><img src="http://images.intflag.com/docker01-003.png" alt=""></p><p>传统虚拟机技术是虚拟出一套硬件后，在其上运行一个完整操作系统，在该系统上再运行所需应用进程；而容器内的应用进程直接运行于宿主的内核，容器内没有自己的内核，而且也没有进行硬件虚拟。因此容器要比传统虚拟机更为轻便。</p><h3 id="容器与虚拟机-VM-总结"><a href="#容器与虚拟机-VM-总结" class="headerlink" title="容器与虚拟机 (VM) 总结"></a>容器与虚拟机 (VM) 总结</h3><p><img src="http://images.intflag.com/docker01-004.png" alt=""></p><ul><li>容器是一个应用层抽象，用于将代码和依赖资源打包在一起。 多个容器可以在同一台机器上运行，共享操作系统内核，但各自作为独立的进程在用户空间中运行 。与虚拟机相比， 容器占用的空间较少（容器镜像大小通常只有几十兆），瞬间就能完成启动 。</li><li>虚拟机（VM）是一个物理硬件层抽象，用于将一台服务器变成多台服务器。 管理程序允许多个VM在一台机器上运行。每个VM都包含一整套操作系统、一个或多个应用、必要的二进制文件和库资源，因此占用大量空间。而且VM启动也十分缓慢 。</li></ul><p>通过Docker官网，我们知道了这么多Docker的优势，但是大家也没有必要完全否定虚拟机技术，因为两者有不同的使用场景。虚拟机更擅长于彻底隔离整个运行环境。例如，云服务提供商通常采用虚拟机技术隔离不同的用户。而Docker通常用于隔离不同的应用 ，例如前端，后端以及数据库。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;本人微信公众号，欢迎扫码关注！&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;http://images.intflag.com/bigdata002.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引
       
     
     </summary>
@@ -601,70 +661,6 @@
       <category term="遇害记者" scheme="http://yoursite.com/tags/%E9%81%87%E5%AE%B3%E8%AE%B0%E8%80%85/"/>
     
       <category term="言论自由" scheme="http://yoursite.com/tags/%E8%A8%80%E8%AE%BA%E8%87%AA%E7%94%B1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>我和小伙伴在北京的租房经历</title>
-    <link href="http://yoursite.com/%E6%88%91%E5%92%8C%E5%B0%8F%E4%BC%99%E4%BC%B4%E5%9C%A8%E5%8C%97%E4%BA%AC%E7%9A%84%E7%A7%9F%E6%88%BF%E7%BB%8F%E5%8E%86.html"/>
-    <id>http://yoursite.com/我和小伙伴在北京的租房经历.html</id>
-    <published>2018-10-29T08:19:41.000Z</published>
-    <updated>2018-10-29T08:19:41.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>转载自本人微信公众号「intflags」，欢迎扫码关注！</p></blockquote><p><img src="http://images.intflag.com/introduce2.jpg" alt=""></p><p>时间过得真快，来北京生活和工作已经20多天了，虽然之前也有来过，但那是来参赛，有老师的陪同，食宿也都由举办方安排，什么都不用操心，只要专心比赛就行，回想起来简直爽歪歪。</p><p>其实自己独立生活也什么大不了，相信各位和我一样，在上大学之前就已经有好几年的住校经验了。虽然这样说，但租房这件事可非同小可，尽量提前计划好。今天就和大家说说租房的一些注意事项。</p><p>在经济充足的情况下尽量找正规中介，看中介是否具备以下证明手续：工商部门颁发的营业执照、在房地产管理部门办理备案手续的证明、房地产管理部门颁发的房地产经纪机构资质证书、税务部门颁发的税务登记证。如果这些你没办法搞清楚的话，那就找目前市场上规模最大的、口碑最好的。</p><p>中介房源比较多，可供挑选，不用到处奔忙去找房源，只要你把需求提出来，就会给你推荐适合你的房子。中介会和房东协商好价格、压金、租金之类，而且大型的中介公司的房源价格基本是固定的，不用讨价还价，当然价格会高一些。中介公司有比较正规的租房合同，并作为第三方，公平公正的验收房子、查看所租房子里物品、结清之前的物业、水电费等。但条件是要出一个月房租来当中介费。</p><p>中介只是相对来说安全一点儿，不要轻信任何中介，多留点儿心眼，必要时可以用手机录音。</p><p>千万不要找二房东，不安全！如何区分呢？先打电话，直接问他是中介还是房东， 如果他说房东，那就问他这房子是你的吗？有没房产证等等详细的问题，总之尽量避免跟二房东租房，如果万一你把房租交给了他，而他却跑路了，那么你和真正的房东之间就会产生一些不必要的纠纷。</p><p>一定要提前选定租房的位置，在市内还是在郊区，位于几环等等。然后搞清楚交通情况，用地图软件查看距地铁站的时间，到你的工作地点一共需要的时间。尤其在实际的看房过程中要注意周围环境，有没有超市、餐馆、药店或医院等等。但是有一点要清楚，地段越好房租越贵，这是永远不变的真理，所以要结合自身的经济状况去选择租房的位置，开始难免会艰苦一点儿，但这就是生活对你的考验，正因为如此你才更应该努力奋斗，靠自己的能力改变生活环境。放几张图让你们看看北京早高峰时候的地铁。<br><img src="http://images.intflag.com/%E6%88%91%E5%92%8C%E5%B0%8F%E4%BC%99%E4%BC%B4%E5%9C%A8%E5%8C%97%E4%BA%AC%E7%9A%84%E7%A7%9F%E6%88%BF%E7%BB%8F%E5%8E%8605.jpeg" alt="拥挤的地铁"><br><img src="http://images.intflag.com/%E6%88%91%E5%92%8C%E5%B0%8F%E4%BC%99%E4%BC%B4%E5%9C%A8%E5%8C%97%E4%BA%AC%E7%9A%84%E7%A7%9F%E6%88%BF%E7%BB%8F%E5%8E%8602.jpeg" alt="拥挤的地铁"><br>当上面所有事宜你都了解清楚，并去看了房，然后也比较有意向，准备签合同的时候你要注意了，必须要有正规的租房合同，并且看清楚条款，如果不懂可以先在网上看看别人的，千万不要“被贷款”，关于这个话题可以从网查看详细说明。<br><img src="http://images.intflag.com/%E6%88%91%E5%92%8C%E5%B0%8F%E4%BC%99%E4%BC%B4%E5%9C%A8%E5%8C%97%E4%BA%AC%E7%9A%84%E7%A7%9F%E6%88%BF%E7%BB%8F%E5%8E%8603.jpeg" alt="租房被网贷"><br>找房不容易意，租房需谨慎，在没有考虑清楚之前，千万别轻易签合同。没签之前，你是爷，签了之后，人家是爷。一旦上当受骗，要冷静处理，合理维护自身权益！最后把我们租房时记录的详细注意事项分享给大家。<br><img src="http://images.intflag.com/%E6%88%91%E5%92%8C%E5%B0%8F%E4%BC%99%E4%BC%B4%E5%9C%A8%E5%8C%97%E4%BA%AC%E7%9A%84%E7%A7%9F%E6%88%BF%E7%BB%8F%E5%8E%8604.jpeg" alt="租房注意事项"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;转载自本人微信公众号「intflags」，欢迎扫码关注！&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&quot;http://images.intflag.com/introduce2.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;时间过得真快，
-      
-    
-    </summary>
-    
-      <category term="云端笑猿" scheme="http://yoursite.com/categories/%E4%BA%91%E7%AB%AF%E7%AC%91%E7%8C%BF/"/>
-    
-    
-      <category term="北京" scheme="http://yoursite.com/tags/%E5%8C%97%E4%BA%AC/"/>
-    
-      <category term="租房" scheme="http://yoursite.com/tags/%E7%A7%9F%E6%88%BF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>分享一下我的面试和入职经历</title>
-    <link href="http://yoursite.com/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E6%88%91%E7%9A%84%E9%9D%A2%E8%AF%95%E5%92%8C%E5%85%A5%E8%81%8C%E7%BB%8F%E5%8E%86.html"/>
-    <id>http://yoursite.com/分享一下我的面试和入职经历.html</id>
-    <published>2018-10-29T07:50:45.000Z</published>
-    <updated>2018-10-29T07:50:45.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>转载自本人微信公众号「intflags」，欢迎扫码关注！</p></blockquote><p><img src="http://images.intflag.com/introduce2.jpg" alt=""></p><p>各位小伙伴大家好，过去的几个月我经历了企业实训、找工作、面试、入职考核，一直没有时间维护公众号，虽然目前刚刚入职，任务很重，但是最起码有了一点空闲时间。</p><p>从今天开始，我会利用下班时间构思写作，每周至少会分享一篇文章，内容不限，但都会是我的亲身经历，或者我了解的内容，我会尽力保证文章的质量，争取对大家有所帮助。</p><p>同时查成绩的服务今后也会完全免费，我会把这个平台提供给部分有时间、可靠的同学，我和他们一起为大家服务。</p><p>回到今天的话题，怎样在面试中脱颖而出？如何从学校思维转换到职场思维？下面我会把自己面试和入职期间的经历分享出来，希望能帮助到大家！</p><p>面试是面试官在短时间内了解你的一个重要过程，所以一定要冷静的回答面试官的问题，千万不要紧张，毕竟工作是一个双向选择的过程，如果面试官看不上你，那你还非要去吗？必须得有自信。此外适当的突出你自己的个性，多讲一些属于你自己的故事，因为他们在面试过程中听了太多套话，早已麻木，如果你把自己一些有趣、又能体现自己某一方面能力的经历分享出来，则会让面试官眼前一亮，加深对你的印象，面试成功的几率会很大。</p><p>比如我在面试过程中就分享了我如何从零开始运营一个公众号，如何创业，如何去拉赞助等等，这些经历能够充分的体现我的思维方式、执行力和沟通交流的能力。不只是这些，任何能体现你自己的故事都可以分享，比如在你在学生会组织筹办活动、在社团学会了某个技能、组织了一场老乡聚会等等，这些都是你面试的加分点，能够大大提高你的面试成功率。</p><p>除此之外你的专业知识也必须熟练掌握，同时精心准备一份能让面试官眼前一亮的简历。简历要做到繁简合理，千万不要长篇大论，还要突出自身优势，把大学期间的职务、获奖经历、语言能力（四六级）等罗列上去，这也是加分项。关于简历的撰写，我有时间会单独写一篇文章，同时我会把自己制作简历时从网上收藏的一些精美简历模版、在线简历制作平台分享给大家。</p><p>最后就是着装方面了，穿着打扮一定要合理，尽量穿的正式一点，这会让面试官觉得你很专业，也很看重这次面试，但千万不要表现太过，尤其女同学不要化太浓的妆，不然适得其反。</p><p>如果你能通过面试，那么恭喜你，你已经成为一个准职场人了，如果你是实习生的话，刚到公司以后都会有一个考核，你的领导会给你分配一位有经验的员工作为导师，让你快速熟悉公司产品和业务，然后给你安排任务，如果你能按时完成且没有太大的错误，那么基本上就会通过考核，通过考核以后就会正式给你发放Offer，然后签定实习合同。<br><img src="http://images.intflag.com/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E6%88%91%E9%9D%A2%E8%AF%95%E5%92%8C%E5%85%A5%E8%81%8C%E7%9A%84%E4%BA%B2%E8%BA%AB%E7%BB%8F%E5%8E%8602.jpg" alt="Offer"></p><p>其实在工作中领导不光会关注你的技术和业务能力，有些非技术方面的能力也很重要，比如为人处事、做事是否踏实、解决问题的能力等，如果让我说这两个层面哪个重要的话，我个人觉得是第二个。</p><p>因为技术层面的东西可以通过学习来弥补和提高的，好的技术确实可以给公司带来价值，但是如果没有团队合作意识、不善于表达自己的想法、没有责任心等等这些非技术层面的东西，也还是不行，那你这辈子也只能做最底层的职员，而这些非技术层面的东西往往却非常关键。</p><p>中国人常常说“枪打出头鸟”，但我个人认为在合适的情况下，要主动去当这个“出头鸟”，这里的出头可不是出风头的意思，而是克服自己心里面的恐惧，勇敢表达出自己的想法。其实大部分人都不敢，如果你能做到那么你就胜了第一步，也是最重要的一步。所以，不光要做一个有技术的人，还要做一个有思想、敢表达自己想法的人。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;转载自本人微信公众号「intflags」，欢迎扫码关注！&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&quot;http://images.intflag.com/introduce2.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;各位小伙伴大家
-      
-    
-    </summary>
-    
-      <category term="云端笑猿" scheme="http://yoursite.com/categories/%E4%BA%91%E7%AB%AF%E7%AC%91%E7%8C%BF/"/>
-    
-    
-      <category term="北京" scheme="http://yoursite.com/tags/%E5%8C%97%E4%BA%AC/"/>
-    
-      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
-    
-      <category term="入职" scheme="http://yoursite.com/tags/%E5%85%A5%E8%81%8C/"/>
     
   </entry>
   

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="北京,面试,入职,">
+  <meta name="keywords" content="Docker,">
 
 
 
@@ -81,20 +81,20 @@
 
 
 
-<meta name="description" content="转载自本人微信公众号「intflags」，欢迎扫码关注！   各位小伙伴大家好，过去的几个月我经历了企业实训、找工作、面试、入职考核，一直没有时间维护公众号，虽然目前刚刚入职，任务很重，但是最起码有了一点空闲时间。 从今天开始，我会利用下班时间构思写作，每周至少会分享一篇文章，内容不限，但都会是我的亲身经历，或者我了解的内容，我会尽力保证文章的质量，争取对大家有所帮助。 同时查成绩的服务今后也会">
-<meta name="keywords" content="北京,面试,入职">
+<meta name="description" content="本人微信公众号，欢迎扫码关注！   环境准备 centos 7  Docker下载安装步骤： 12345678910111213141、检查内核版本，必须是3.10及以上uname -r2、安装dockeryum install docker3、输入y确认安装4、启动docker[root@localhost ~]# systemctl start docker[root@localhost ~">
+<meta name="keywords" content="Docker">
 <meta property="og:type" content="article">
-<meta property="og:title" content="分享一下我的面试和入职经历">
-<meta property="og:url" content="http://yoursite.com/分享一下我的面试和入职经历.html">
+<meta property="og:title" content="Docker系列002-Docker入门">
+<meta property="og:url" content="http://yoursite.com/Docker系列002-Docker入门.html">
 <meta property="og:site_name" content="云端笑猿">
-<meta property="og:description" content="转载自本人微信公众号「intflags」，欢迎扫码关注！   各位小伙伴大家好，过去的几个月我经历了企业实训、找工作、面试、入职考核，一直没有时间维护公众号，虽然目前刚刚入职，任务很重，但是最起码有了一点空闲时间。 从今天开始，我会利用下班时间构思写作，每周至少会分享一篇文章，内容不限，但都会是我的亲身经历，或者我了解的内容，我会尽力保证文章的质量，争取对大家有所帮助。 同时查成绩的服务今后也会">
+<meta property="og:description" content="本人微信公众号，欢迎扫码关注！   环境准备 centos 7  Docker下载安装步骤： 12345678910111213141、检查内核版本，必须是3.10及以上uname -r2、安装dockeryum install docker3、输入y确认安装4、启动docker[root@localhost ~]# systemctl start docker[root@localhost ~">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://images.intflag.com/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E6%88%91%E9%9D%A2%E8%AF%95%E5%92%8C%E5%85%A5%E8%81%8C%E7%9A%84%E4%BA%B2%E8%BA%AB%E7%BB%8F%E5%8E%8601.jpg">
-<meta property="og:updated_time" content="2018-10-29T07:50:45.000Z">
+<meta property="og:image" content="http://images.intflag.com/docker00-000.jpeg">
+<meta property="og:updated_time" content="2019-12-26T09:34:31.369Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分享一下我的面试和入职经历">
-<meta name="twitter:description" content="转载自本人微信公众号「intflags」，欢迎扫码关注！   各位小伙伴大家好，过去的几个月我经历了企业实训、找工作、面试、入职考核，一直没有时间维护公众号，虽然目前刚刚入职，任务很重，但是最起码有了一点空闲时间。 从今天开始，我会利用下班时间构思写作，每周至少会分享一篇文章，内容不限，但都会是我的亲身经历，或者我了解的内容，我会尽力保证文章的质量，争取对大家有所帮助。 同时查成绩的服务今后也会">
-<meta name="twitter:image" content="http://images.intflag.com/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E6%88%91%E9%9D%A2%E8%AF%95%E5%92%8C%E5%85%A5%E8%81%8C%E7%9A%84%E4%BA%B2%E8%BA%AB%E7%BB%8F%E5%8E%8601.jpg">
+<meta name="twitter:title" content="Docker系列002-Docker入门">
+<meta name="twitter:description" content="本人微信公众号，欢迎扫码关注！   环境准备 centos 7  Docker下载安装步骤： 12345678910111213141、检查内核版本，必须是3.10及以上uname -r2、安装dockeryum install docker3、输入y确认安装4、启动docker[root@localhost ~]# systemctl start docker[root@localhost ~">
+<meta name="twitter:image" content="http://images.intflag.com/docker00-000.jpeg">
 
 
 
@@ -124,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/分享一下我的面试和入职经历.html">
+  <link rel="canonical" href="http://yoursite.com/Docker系列002-Docker入门.html">
 
 
 
 
 
-  <title>分享一下我的面试和入职经历 | 云端笑猿</title>
+  <title>Docker系列002-Docker入门 | 云端笑猿</title>
   
 
 
@@ -247,7 +247,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/分享一下我的面试和入职经历.html">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Docker系列002-Docker入门.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="云端笑猿">
@@ -264,7 +264,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">分享一下我的面试和入职经历</h1>
+          <h1 class="post-title" itemprop="name headline">Docker系列002-Docker入门</h1>
         
 
         <div class="post-meta">
@@ -276,8 +276,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-29T15:50:45+08:00">
-                2018-10-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-26T16:10:20+08:00">
+                2019-12-26
               </time>
             
 
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-10-29T15:50:45+08:00">
-                2018-10-29
+              <time title="更新于" itemprop="dateModified" datetime="2019-12-26T17:34:31+08:00">
+                2019-12-26
               </time>
             
           </span>
@@ -311,8 +311,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/云端笑猿/" itemprop="url" rel="index">
-                    <span itemprop="name">云端笑猿</span>
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
                   </a>
                 </span>
 
@@ -342,7 +342,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.3k
+                  476
                 </span>
               
 
@@ -358,7 +358,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  2
                 </span>
               
             </div>
@@ -381,8 +381,8 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="http://images.intflag.com/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E6%88%91%E9%9D%A2%E8%AF%95%E5%92%8C%E5%85%A5%E8%81%8C%E7%9A%84%E4%BA%B2%E8%BA%AB%E7%BB%8F%E5%8E%8601.jpg" rel="gallery_ck4mjeoub0016u0wa5jroi1o7" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://images.intflag.com/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E6%88%91%E9%9D%A2%E8%AF%95%E5%92%8C%E5%85%A5%E8%81%8C%E7%9A%84%E4%BA%B2%E8%BA%AB%E7%BB%8F%E5%8E%8601.jpg" itemprop="contentUrl">
+              <a class="post-gallery-img fancybox" href="http://images.intflag.com/docker00-000.jpeg" rel="gallery_ck4mjeosy0000u0wal1lviry1" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url">
+                <img src="http://images.intflag.com/docker00-000.jpeg" itemprop="contentUrl">
               </a>
             
           
@@ -394,21 +394,49 @@
 
       
         <blockquote>
-<p>转载自本人微信公众号「intflags」，欢迎扫码关注！</p>
+<p>本人微信公众号，欢迎扫码关注！</p>
 </blockquote>
-<p><img src="http://images.intflag.com/introduce2.jpg" alt=""></p>
-<p>各位小伙伴大家好，过去的几个月我经历了企业实训、找工作、面试、入职考核，一直没有时间维护公众号，虽然目前刚刚入职，任务很重，但是最起码有了一点空闲时间。</p>
-<p>从今天开始，我会利用下班时间构思写作，每周至少会分享一篇文章，内容不限，但都会是我的亲身经历，或者我了解的内容，我会尽力保证文章的质量，争取对大家有所帮助。</p>
-<p>同时查成绩的服务今后也会完全免费，我会把这个平台提供给部分有时间、可靠的同学，我和他们一起为大家服务。</p>
-<p>回到今天的话题，怎样在面试中脱颖而出？如何从学校思维转换到职场思维？下面我会把自己面试和入职期间的经历分享出来，希望能帮助到大家！</p>
-<p>面试是面试官在短时间内了解你的一个重要过程，所以一定要冷静的回答面试官的问题，千万不要紧张，毕竟工作是一个双向选择的过程，如果面试官看不上你，那你还非要去吗？必须得有自信。此外适当的突出你自己的个性，多讲一些属于你自己的故事，因为他们在面试过程中听了太多套话，早已麻木，如果你把自己一些有趣、又能体现自己某一方面能力的经历分享出来，则会让面试官眼前一亮，加深对你的印象，面试成功的几率会很大。</p>
-<p>比如我在面试过程中就分享了我如何从零开始运营一个公众号，如何创业，如何去拉赞助等等，这些经历能够充分的体现我的思维方式、执行力和沟通交流的能力。不只是这些，任何能体现你自己的故事都可以分享，比如在你在学生会组织筹办活动、在社团学会了某个技能、组织了一场老乡聚会等等，这些都是你面试的加分点，能够大大提高你的面试成功率。</p>
-<p>除此之外你的专业知识也必须熟练掌握，同时精心准备一份能让面试官眼前一亮的简历。简历要做到繁简合理，千万不要长篇大论，还要突出自身优势，把大学期间的职务、获奖经历、语言能力（四六级）等罗列上去，这也是加分项。关于简历的撰写，我有时间会单独写一篇文章，同时我会把自己制作简历时从网上收藏的一些精美简历模版、在线简历制作平台分享给大家。</p>
-<p>最后就是着装方面了，穿着打扮一定要合理，尽量穿的正式一点，这会让面试官觉得你很专业，也很看重这次面试，但千万不要表现太过，尤其女同学不要化太浓的妆，不然适得其反。</p>
-<p>如果你能通过面试，那么恭喜你，你已经成为一个准职场人了，如果你是实习生的话，刚到公司以后都会有一个考核，你的领导会给你分配一位有经验的员工作为导师，让你快速熟悉公司产品和业务，然后给你安排任务，如果你能按时完成且没有太大的错误，那么基本上就会通过考核，通过考核以后就会正式给你发放Offer，然后签定实习合同。<br><img src="http://images.intflag.com/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E6%88%91%E9%9D%A2%E8%AF%95%E5%92%8C%E5%85%A5%E8%81%8C%E7%9A%84%E4%BA%B2%E8%BA%AB%E7%BB%8F%E5%8E%8602.jpg" alt="Offer"></p>
-<p>其实在工作中领导不光会关注你的技术和业务能力，有些非技术方面的能力也很重要，比如为人处事、做事是否踏实、解决问题的能力等，如果让我说这两个层面哪个重要的话，我个人觉得是第二个。</p>
-<p>因为技术层面的东西可以通过学习来弥补和提高的，好的技术确实可以给公司带来价值，但是如果没有团队合作意识、不善于表达自己的想法、没有责任心等等这些非技术层面的东西，也还是不行，那你这辈子也只能做最底层的职员，而这些非技术层面的东西往往却非常关键。</p>
-<p>中国人常常说“枪打出头鸟”，但我个人认为在合适的情况下，要主动去当这个“出头鸟”，这里的出头可不是出风头的意思，而是克服自己心里面的恐惧，勇敢表达出自己的想法。其实大部分人都不敢，如果你能做到那么你就胜了第一步，也是最重要的一步。所以，不光要做一个有技术的人，还要做一个有思想、敢表达自己想法的人。</p>
+<p><img src="http://images.intflag.com/bigdata002.jpg" alt=""></p>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><ul>
+<li>centos 7</li>
+</ul>
+<h3 id="Docker下载安装"><a href="#Docker下载安装" class="headerlink" title="Docker下载安装"></a>Docker下载安装</h3><p>步骤：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1、检查内核版本，必须是3.10及以上</span><br><span class="line">uname -r</span><br><span class="line">2、安装docker</span><br><span class="line">yum install docker</span><br><span class="line">3、输入y确认安装</span><br><span class="line">4、启动docker</span><br><span class="line">[root@localhost ~]# systemctl start docker</span><br><span class="line">[root@localhost ~]# docker -v</span><br><span class="line">Docker version 1.12.6, build 3e8e77d/1.12.6</span><br><span class="line">5、开机启动docker</span><br><span class="line">[root@localhost ~]# systemctl enable docker</span><br><span class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.</span><br><span class="line">6、停止docker</span><br><span class="line">systemctl stop docker</span><br></pre></td></tr></table></figure>
+<h3 id="Docker常用命令及操作"><a href="#Docker常用命令及操作" class="headerlink" title="Docker常用命令及操作"></a>Docker常用命令及操作</h3><h4 id="镜像操作"><a href="#镜像操作" class="headerlink" title="镜像操作"></a>镜像操作</h4><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>检索</td>
+<td>docker  search 关键字  eg：docker  search redis</td>
+<td>我们经常去docker  hub上检索镜像的详细信息，如镜像的TAG。</td>
+</tr>
+<tr>
+<td>拉取</td>
+<td>docker pull 镜像名:tag</td>
+<td>:tag是可选的，tag表示标签，多为软件的版本，默认是latest</td>
+</tr>
+<tr>
+<td>列表</td>
+<td>docker images</td>
+<td>查看所有本地镜像</td>
+</tr>
+<tr>
+<td>删除</td>
+<td>docker rmi image-id</td>
+<td>删除指定的本地镜像</td>
+</tr>
+</tbody>
+</table>
+<p>官方镜像市场：<a href="https://hub.docker.com/" target="_blank" rel="noopener">https://hub.docker.com/</a></p>
+<h4 id="容器操作"><a href="#容器操作" class="headerlink" title="容器操作"></a>容器操作</h4><p>软件镜像（QQ安装程序）—-运行镜像—-产生一个容器（正在运行的软件，运行的QQ）；</p>
+<p>步骤：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">1、搜索镜像</span><br><span class="line">[root@localhost ~]# docker search tomcat</span><br><span class="line">2、拉取镜像</span><br><span class="line">[root@localhost ~]# docker pull tomcat</span><br><span class="line">3、根据镜像启动容器</span><br><span class="line">docker run --name mytomcat -d tomcat:latest</span><br><span class="line">4、docker ps  </span><br><span class="line">查看运行中的容器</span><br><span class="line">5、 停止运行中的容器</span><br><span class="line">docker stop  容器的id</span><br><span class="line">6、查看所有的容器</span><br><span class="line">docker ps -a</span><br><span class="line">7、启动容器</span><br><span class="line">docker start 容器id</span><br><span class="line">8、删除一个容器</span><br><span class="line"> docker rm 容器id</span><br><span class="line">9、启动一个做了端口映射的tomcat</span><br><span class="line">[root@localhost ~]# docker run -d -p 8888:8080 tomcat</span><br><span class="line">-d：后台运行</span><br><span class="line">-p: 将主机的端口映射到容器的一个端口    主机端口:容器内部的端口</span><br><span class="line"></span><br><span class="line">10、为了演示简单关闭了linux的防火墙</span><br><span class="line">service firewalld status ；查看防火墙状态</span><br><span class="line">service firewalld stop：关闭防火墙</span><br><span class="line">11、查看容器的日志</span><br><span class="line">docker logs container-name/container-id</span><br><span class="line"></span><br><span class="line">更多命令参看</span><br><span class="line">https://docs.docker.com/engine/reference/commandline/docker/</span><br><span class="line">可以参考每一个镜像的文档</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -436,11 +464,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/北京/" rel="tag"><i class="fa fa-tag"></i> 北京</a>
-          
-            <a href="/tags/面试/" rel="tag"><i class="fa fa-tag"></i> 面试</a>
-          
-            <a href="/tags/入职/" rel="tag"><i class="fa fa-tag"></i> 入职</a>
+            <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag"></i> Docker</a>
           
         </div>
       
@@ -453,14 +477,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/Docker系列001-Docker概述.html" rel="next" title="Docker系列001-Docker概述">
+                <i class="fa fa-chevron-left"></i> Docker系列001-Docker概述
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/我和小伙伴在北京的租房经历.html" rel="prev" title="我和小伙伴在北京的租房经历">
-                我和小伙伴在北京的租房经历 <i class="fa fa-chevron-right"></i>
+              <a href="/Docker系列003-在Docker中安装Centos镜像.html" rel="prev" title="Docker系列003-在Docker中安装Centos镜像">
+                Docker系列003-在Docker中安装Centos镜像 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -513,8 +541,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -623,6 +660,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-number">1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker下载安装"><span class="nav-number">2.</span> <span class="nav-text">Docker下载安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker常用命令及操作"><span class="nav-number">3.</span> <span class="nav-text">Docker常用命令及操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#镜像操作"><span class="nav-number">3.1.</span> <span class="nav-text">镜像操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#容器操作"><span class="nav-number">3.2.</span> <span class="nav-text">容器操作</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

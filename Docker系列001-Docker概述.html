@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="北京,面试,入职,">
+  <meta name="keywords" content="Docker,">
 
 
 
@@ -81,20 +81,20 @@
 
 
 
-<meta name="description" content="转载自本人微信公众号「intflags」，欢迎扫码关注！   各位小伙伴大家好，过去的几个月我经历了企业实训、找工作、面试、入职考核，一直没有时间维护公众号，虽然目前刚刚入职，任务很重，但是最起码有了一点空闲时间。 从今天开始，我会利用下班时间构思写作，每周至少会分享一篇文章，内容不限，但都会是我的亲身经历，或者我了解的内容，我会尽力保证文章的质量，争取对大家有所帮助。 同时查成绩的服务今后也会">
-<meta name="keywords" content="北京,面试,入职">
+<meta name="description" content="本人微信公众号，欢迎扫码关注！   引言Docker是一个开源的容器引擎，在搞清楚它是什么之前，必须先了解什么是容器。 什么是容器先看一下官方介绍：  容器就是将软件打包成标准化单元，以用于开发、交付和部署。   容器镜像是轻量的、可执行的独立软件包 ，包含软件运行所需的所有内容：代码、运行时环境、系统工具、系统库和设置。 容器化软件适用于基于Linux和Windows的应用，在任何环境中都能够">
+<meta name="keywords" content="Docker">
 <meta property="og:type" content="article">
-<meta property="og:title" content="分享一下我的面试和入职经历">
-<meta property="og:url" content="http://yoursite.com/分享一下我的面试和入职经历.html">
+<meta property="og:title" content="Docker系列001-Docker概述">
+<meta property="og:url" content="http://yoursite.com/Docker系列001-Docker概述.html">
 <meta property="og:site_name" content="云端笑猿">
-<meta property="og:description" content="转载自本人微信公众号「intflags」，欢迎扫码关注！   各位小伙伴大家好，过去的几个月我经历了企业实训、找工作、面试、入职考核，一直没有时间维护公众号，虽然目前刚刚入职，任务很重，但是最起码有了一点空闲时间。 从今天开始，我会利用下班时间构思写作，每周至少会分享一篇文章，内容不限，但都会是我的亲身经历，或者我了解的内容，我会尽力保证文章的质量，争取对大家有所帮助。 同时查成绩的服务今后也会">
+<meta property="og:description" content="本人微信公众号，欢迎扫码关注！   引言Docker是一个开源的容器引擎，在搞清楚它是什么之前，必须先了解什么是容器。 什么是容器先看一下官方介绍：  容器就是将软件打包成标准化单元，以用于开发、交付和部署。   容器镜像是轻量的、可执行的独立软件包 ，包含软件运行所需的所有内容：代码、运行时环境、系统工具、系统库和设置。 容器化软件适用于基于Linux和Windows的应用，在任何环境中都能够">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://images.intflag.com/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E6%88%91%E9%9D%A2%E8%AF%95%E5%92%8C%E5%85%A5%E8%81%8C%E7%9A%84%E4%BA%B2%E8%BA%AB%E7%BB%8F%E5%8E%8601.jpg">
-<meta property="og:updated_time" content="2018-10-29T07:50:45.000Z">
+<meta property="og:image" content="http://images.intflag.com/docker00-000.jpeg">
+<meta property="og:updated_time" content="2019-12-26T09:34:25.652Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分享一下我的面试和入职经历">
-<meta name="twitter:description" content="转载自本人微信公众号「intflags」，欢迎扫码关注！   各位小伙伴大家好，过去的几个月我经历了企业实训、找工作、面试、入职考核，一直没有时间维护公众号，虽然目前刚刚入职，任务很重，但是最起码有了一点空闲时间。 从今天开始，我会利用下班时间构思写作，每周至少会分享一篇文章，内容不限，但都会是我的亲身经历，或者我了解的内容，我会尽力保证文章的质量，争取对大家有所帮助。 同时查成绩的服务今后也会">
-<meta name="twitter:image" content="http://images.intflag.com/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E6%88%91%E9%9D%A2%E8%AF%95%E5%92%8C%E5%85%A5%E8%81%8C%E7%9A%84%E4%BA%B2%E8%BA%AB%E7%BB%8F%E5%8E%8601.jpg">
+<meta name="twitter:title" content="Docker系列001-Docker概述">
+<meta name="twitter:description" content="本人微信公众号，欢迎扫码关注！   引言Docker是一个开源的容器引擎，在搞清楚它是什么之前，必须先了解什么是容器。 什么是容器先看一下官方介绍：  容器就是将软件打包成标准化单元，以用于开发、交付和部署。   容器镜像是轻量的、可执行的独立软件包 ，包含软件运行所需的所有内容：代码、运行时环境、系统工具、系统库和设置。 容器化软件适用于基于Linux和Windows的应用，在任何环境中都能够">
+<meta name="twitter:image" content="http://images.intflag.com/docker00-000.jpeg">
 
 
 
@@ -124,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/分享一下我的面试和入职经历.html">
+  <link rel="canonical" href="http://yoursite.com/Docker系列001-Docker概述.html">
 
 
 
 
 
-  <title>分享一下我的面试和入职经历 | 云端笑猿</title>
+  <title>Docker系列001-Docker概述 | 云端笑猿</title>
   
 
 
@@ -247,7 +247,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/分享一下我的面试和入职经历.html">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Docker系列001-Docker概述.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="云端笑猿">
@@ -264,7 +264,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">分享一下我的面试和入职经历</h1>
+          <h1 class="post-title" itemprop="name headline">Docker系列001-Docker概述</h1>
         
 
         <div class="post-meta">
@@ -276,8 +276,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-29T15:50:45+08:00">
-                2018-10-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-26T15:15:45+08:00">
+                2019-12-26
               </time>
             
 
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-10-29T15:50:45+08:00">
-                2018-10-29
+              <time title="更新于" itemprop="dateModified" datetime="2019-12-26T17:34:25+08:00">
+                2019-12-26
               </time>
             
           </span>
@@ -311,8 +311,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/云端笑猿/" itemprop="url" rel="index">
-                    <span itemprop="name">云端笑猿</span>
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
                   </a>
                 </span>
 
@@ -342,7 +342,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.3k
+                  1.4k
                 </span>
               
 
@@ -381,8 +381,8 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="http://images.intflag.com/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E6%88%91%E9%9D%A2%E8%AF%95%E5%92%8C%E5%85%A5%E8%81%8C%E7%9A%84%E4%BA%B2%E8%BA%AB%E7%BB%8F%E5%8E%8601.jpg" rel="gallery_ck4mjeoub0016u0wa5jroi1o7" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://images.intflag.com/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E6%88%91%E9%9D%A2%E8%AF%95%E5%92%8C%E5%85%A5%E8%81%8C%E7%9A%84%E4%BA%B2%E8%BA%AB%E7%BB%8F%E5%8E%8601.jpg" itemprop="contentUrl">
+              <a class="post-gallery-img fancybox" href="http://images.intflag.com/docker00-000.jpeg" rel="gallery_ck4mjeot70001u0wa8p4oijrm" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url">
+                <img src="http://images.intflag.com/docker00-000.jpeg" itemprop="contentUrl">
               </a>
             
           
@@ -394,21 +394,58 @@
 
       
         <blockquote>
-<p>转载自本人微信公众号「intflags」，欢迎扫码关注！</p>
+<p>本人微信公众号，欢迎扫码关注！</p>
 </blockquote>
-<p><img src="http://images.intflag.com/introduce2.jpg" alt=""></p>
-<p>各位小伙伴大家好，过去的几个月我经历了企业实训、找工作、面试、入职考核，一直没有时间维护公众号，虽然目前刚刚入职，任务很重，但是最起码有了一点空闲时间。</p>
-<p>从今天开始，我会利用下班时间构思写作，每周至少会分享一篇文章，内容不限，但都会是我的亲身经历，或者我了解的内容，我会尽力保证文章的质量，争取对大家有所帮助。</p>
-<p>同时查成绩的服务今后也会完全免费，我会把这个平台提供给部分有时间、可靠的同学，我和他们一起为大家服务。</p>
-<p>回到今天的话题，怎样在面试中脱颖而出？如何从学校思维转换到职场思维？下面我会把自己面试和入职期间的经历分享出来，希望能帮助到大家！</p>
-<p>面试是面试官在短时间内了解你的一个重要过程，所以一定要冷静的回答面试官的问题，千万不要紧张，毕竟工作是一个双向选择的过程，如果面试官看不上你，那你还非要去吗？必须得有自信。此外适当的突出你自己的个性，多讲一些属于你自己的故事，因为他们在面试过程中听了太多套话，早已麻木，如果你把自己一些有趣、又能体现自己某一方面能力的经历分享出来，则会让面试官眼前一亮，加深对你的印象，面试成功的几率会很大。</p>
-<p>比如我在面试过程中就分享了我如何从零开始运营一个公众号，如何创业，如何去拉赞助等等，这些经历能够充分的体现我的思维方式、执行力和沟通交流的能力。不只是这些，任何能体现你自己的故事都可以分享，比如在你在学生会组织筹办活动、在社团学会了某个技能、组织了一场老乡聚会等等，这些都是你面试的加分点，能够大大提高你的面试成功率。</p>
-<p>除此之外你的专业知识也必须熟练掌握，同时精心准备一份能让面试官眼前一亮的简历。简历要做到繁简合理，千万不要长篇大论，还要突出自身优势，把大学期间的职务、获奖经历、语言能力（四六级）等罗列上去，这也是加分项。关于简历的撰写，我有时间会单独写一篇文章，同时我会把自己制作简历时从网上收藏的一些精美简历模版、在线简历制作平台分享给大家。</p>
-<p>最后就是着装方面了，穿着打扮一定要合理，尽量穿的正式一点，这会让面试官觉得你很专业，也很看重这次面试，但千万不要表现太过，尤其女同学不要化太浓的妆，不然适得其反。</p>
-<p>如果你能通过面试，那么恭喜你，你已经成为一个准职场人了，如果你是实习生的话，刚到公司以后都会有一个考核，你的领导会给你分配一位有经验的员工作为导师，让你快速熟悉公司产品和业务，然后给你安排任务，如果你能按时完成且没有太大的错误，那么基本上就会通过考核，通过考核以后就会正式给你发放Offer，然后签定实习合同。<br><img src="http://images.intflag.com/%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E6%88%91%E9%9D%A2%E8%AF%95%E5%92%8C%E5%85%A5%E8%81%8C%E7%9A%84%E4%BA%B2%E8%BA%AB%E7%BB%8F%E5%8E%8602.jpg" alt="Offer"></p>
-<p>其实在工作中领导不光会关注你的技术和业务能力，有些非技术方面的能力也很重要，比如为人处事、做事是否踏实、解决问题的能力等，如果让我说这两个层面哪个重要的话，我个人觉得是第二个。</p>
-<p>因为技术层面的东西可以通过学习来弥补和提高的，好的技术确实可以给公司带来价值，但是如果没有团队合作意识、不善于表达自己的想法、没有责任心等等这些非技术层面的东西，也还是不行，那你这辈子也只能做最底层的职员，而这些非技术层面的东西往往却非常关键。</p>
-<p>中国人常常说“枪打出头鸟”，但我个人认为在合适的情况下，要主动去当这个“出头鸟”，这里的出头可不是出风头的意思，而是克服自己心里面的恐惧，勇敢表达出自己的想法。其实大部分人都不敢，如果你能做到那么你就胜了第一步，也是最重要的一步。所以，不光要做一个有技术的人，还要做一个有思想、敢表达自己想法的人。</p>
+<p><img src="http://images.intflag.com/bigdata002.jpg" alt=""></p>
+<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>Docker是一个开源的容器引擎，在搞清楚它是什么之前，必须先了解什么是<strong>容器</strong>。</p>
+<h3 id="什么是容器"><a href="#什么是容器" class="headerlink" title="什么是容器"></a>什么是容器</h3><p>先看一下官方介绍：</p>
+<blockquote>
+<p>容器就是将软件打包成标准化单元，以用于开发、交付和部署。</p>
+</blockquote>
+<ul>
+<li>容器镜像是轻量的、可执行的独立软件包 ，包含软件运行所需的所有内容：代码、运行时环境、系统工具、系统库和设置。</li>
+<li>容器化软件适用于基于Linux和Windows的应用，在任何环境中都能够始终如一地运行。</li>
+<li>容器赋予了软件独立性，使其免受外在环境差异（例如，开发和预演环境的差异）的影响，从而有助于减少团队间在相同基础设施上运行不同软件时的冲突。</li>
+</ul>
+<p><img src="http://images.intflag.com/docker01-001.png" alt=""></p>
+<h3 id="什么是Docker"><a href="#什么是Docker" class="headerlink" title="什么是Docker"></a>什么是Docker</h3><ul>
+<li>Docker是世界领先的软件容器平台。</li>
+<li>Docker使用Google公司推出的Go语言进行开发实现，基于Linux内核的cgroup，namespace，以及AUFS类的UnionFS等技术，对进程进行封装隔离，属于操作系统层面的虚拟化技术。 由于隔离的进程独立于宿主和其它的隔离的进程，因此也称其为容器。Docke最初实现是基于LXC。</li>
+<li>Docker能够自动执行重复性任务，例如搭建和配置开发环境，从而解放了开发人员以便他们专注在真正重要的事情上：构建杰出的软件。</li>
+<li>用户可以方便地创建和使用容器，把自己的应用放入容器。容器还可以进行版本管理、复制、分享、修改，就像管理普通的代码一样。</li>
+</ul>
+<p><img src="http://images.intflag.com/docker01-002.jpeg" alt=""></p>
+<h3 id="Docker思想"><a href="#Docker思想" class="headerlink" title="Docker思想"></a>Docker思想</h3><ul>
+<li>集装箱</li>
+<li>标准化： ①运输方式、②存储方式、 ③API接口</li>
+<li>隔离</li>
+</ul>
+<h1 id="Docker容器的特点"><a href="#Docker容器的特点" class="headerlink" title="Docker容器的特点"></a>Docker容器的特点</h1><ul>
+<li>轻量，在一台机器上运行的多个Docker容器可以共享这台机器的操作系统内核；它们能够迅速启动，只需占用很少的计算和内存资源。镜像是通过文件系统层进行构造的，并共享一些公共文件。这样就能尽量降低磁盘用量，并能更快地下载镜像。</li>
+<li>标准，Docker容器基于开放式标准，能够在所有主流Linux版本、Microsoft Windows以及包括VM、裸机服务器和云在内的任何基础设施上运行。</li>
+<li>安全，Docker赋予应用的隔离性不仅限于彼此隔离，还独立于底层的基础设施。Docker默认提供最强的隔离，因此应用出现问题，也只是单个容器的问题，而不会波及到整台机器。</li>
+</ul>
+<h3 id="为什么要用Docker"><a href="#为什么要用Docker" class="headerlink" title="为什么要用Docker"></a>为什么要用Docker</h3><ul>
+<li>Docker的镜像提供了除内核外完整的运行时环境，确保了应用运行环境一致性，从而不会再出现“这段代码在我机器上没问题啊”这类问题；——一致的运行环境</li>
+<li>可以做到秒级、甚至毫秒级的启动时间。大大的节约了开发、测试、部署的时间。——更快速的启动时间</li>
+<li>避免公用的服务器，资源会容易受到其他用户的影响。——隔离性</li>
+<li>善于处理集中爆发的服务器使用压力；——弹性伸缩，快速扩展</li>
+<li>可以很轻易的将在一个平台上运行的应用，迁移到另一个平台上，而不用担心运行环境的变化导致应用无法正常运行的情况。——迁移方便</li>
+<li>使用Docker可以通过定制应用镜像来实现持续集成、持续交付、部署。——持续交付和部署</li>
+</ul>
+<h3 id="容器-VS-虚拟机"><a href="#容器-VS-虚拟机" class="headerlink" title="容器 VS 虚拟机"></a>容器 VS 虚拟机</h3><p>每当说起容器，我们不得不将其与虚拟机做一个比较。</p>
+<ul>
+<li>简单来说： 容器和虚拟机具有相似的资源隔离和分配优势，但功能有所不同，因为容器虚拟化的是操作系统，而不是硬件，因此容器更容易移植，效率也更高。</li>
+<li>两者对比图</li>
+</ul>
+<p><img src="http://images.intflag.com/docker01-003.png" alt=""></p>
+<p>传统虚拟机技术是虚拟出一套硬件后，在其上运行一个完整操作系统，在该系统上再运行所需应用进程；而容器内的应用进程直接运行于宿主的内核，容器内没有自己的内核，而且也没有进行硬件虚拟。因此容器要比传统虚拟机更为轻便。</p>
+<h3 id="容器与虚拟机-VM-总结"><a href="#容器与虚拟机-VM-总结" class="headerlink" title="容器与虚拟机 (VM) 总结"></a>容器与虚拟机 (VM) 总结</h3><p><img src="http://images.intflag.com/docker01-004.png" alt=""></p>
+<ul>
+<li>容器是一个应用层抽象，用于将代码和依赖资源打包在一起。 多个容器可以在同一台机器上运行，共享操作系统内核，但各自作为独立的进程在用户空间中运行 。与虚拟机相比， 容器占用的空间较少（容器镜像大小通常只有几十兆），瞬间就能完成启动 。</li>
+<li>虚拟机（VM）是一个物理硬件层抽象，用于将一台服务器变成多台服务器。 管理程序允许多个VM在一台机器上运行。每个VM都包含一整套操作系统、一个或多个应用、必要的二进制文件和库资源，因此占用大量空间。而且VM启动也十分缓慢 。</li>
+</ul>
+<p>通过Docker官网，我们知道了这么多Docker的优势，但是大家也没有必要完全否定虚拟机技术，因为两者有不同的使用场景。虚拟机更擅长于彻底隔离整个运行环境。例如，云服务提供商通常采用虚拟机技术隔离不同的用户。而Docker通常用于隔离不同的应用 ，例如前端，后端以及数据库。</p>
 
       
     </div>
@@ -436,11 +473,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/北京/" rel="tag"><i class="fa fa-tag"></i> 北京</a>
-          
-            <a href="/tags/面试/" rel="tag"><i class="fa fa-tag"></i> 面试</a>
-          
-            <a href="/tags/入职/" rel="tag"><i class="fa fa-tag"></i> 入职</a>
+            <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag"></i> Docker</a>
           
         </div>
       
@@ -453,14 +486,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/Hadoop-CHD学习001-环境准备.html" rel="next" title="Hadoop-CHD学习001-环境准备">
+                <i class="fa fa-chevron-left"></i> Hadoop-CHD学习001-环境准备
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/我和小伙伴在北京的租房经历.html" rel="prev" title="我和小伙伴在北京的租房经历">
-                我和小伙伴在北京的租房经历 <i class="fa fa-chevron-right"></i>
+              <a href="/Docker系列002-Docker入门.html" rel="prev" title="Docker系列002-Docker入门">
+                Docker系列002-Docker入门 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -513,8 +550,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -623,6 +669,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是容器"><span class="nav-number">2.</span> <span class="nav-text">什么是容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Docker"><span class="nav-number">3.</span> <span class="nav-text">什么是Docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker思想"><span class="nav-number">4.</span> <span class="nav-text">Docker思想</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker容器的特点"><span class="nav-number"></span> <span class="nav-text">Docker容器的特点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要用Docker"><span class="nav-number">1.</span> <span class="nav-text">为什么要用Docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容器-VS-虚拟机"><span class="nav-number">2.</span> <span class="nav-text">容器 VS 虚拟机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容器与虚拟机-VM-总结"><span class="nav-number">3.</span> <span class="nav-text">容器与虚拟机 (VM) 总结</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
